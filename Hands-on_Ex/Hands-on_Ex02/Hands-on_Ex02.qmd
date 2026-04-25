@@ -3,7 +3,7 @@ title: "Hands-on Exercise 2"
 author: "Meng Xinyu"
 ---
 
-**\# 2 Beyond ggplot2 Fundamentals**
+# **2 Beyond ggplot2 Fundamentals**
 
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
