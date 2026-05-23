@@ -1,0 +1,140 @@
+/*-- scss:defaults --*/
+
+$body-bg:        #FBF8F4;
+$body-color:     #3F3A36;
+$link-color:     #B8807A;
+
+$presentation-heading-color:       #5A4E47;
+$presentation-heading-font-weight: 600;
+$presentation-font-size-root:      30px;
+
+$callout-color-note: #8AAE92;
+
+/*-- scss:rules --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Quicksand:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
+
+// Global font — Nunito for body, Quicksand for content headings
+.reveal,
+.reveal p,
+.reveal li,
+.reveal td,
+.reveal th {
+  font-family: 'Nunito', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: 'Quicksand', 'Nunito', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+}
+
+// ===== TITLE SLIDE — Magazine cover style =====
+.reveal .slide.title-slide {
+  text-align: center;
+  height: 100%;
+}
+
+// Hide whatever Quarto wraps the title in and rebuild the look
+.reveal .slide.title-slide h1.title {
+  font-family: 'Fraunces', 'Playfair Display', Georgia, serif !important;
+  font-size: 9em !important;          // BIG — fills the slide
+  font-weight: 700 !important;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  color: #5A4E47;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0.95;
+  letter-spacing: -0.02em;             // tighter spacing for poster feel
+}
+
+// Add a decorative line above the subtitle
+.reveal .slide.title-slide .subtitle {
+  font-family: 'Quicksand', sans-serif !important;
+  font-size: 1.6em !important;
+  color: #A89F8D;
+  font-weight: 400;
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+  letter-spacing: 0.18em;              // wide-spaced, editorial feel
+  text-transform: uppercase;
+  position: relative;
+}
+
+.reveal .slide.title-slide .subtitle::before {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background-color: #B8807A;
+  margin: 0 auto 1.2em auto;
+}
+
+.reveal .slide.title-slide .quarto-title-author-name,
+.reveal .slide.title-slide .author {
+  font-family: 'Quicksand', sans-serif !important;
+  font-size: 1.15em;
+  font-weight: 500;
+  color: #5A4E47;
+  margin-top: 0.5em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.reveal .slide.title-slide .date {
+  font-family: 'Quicksand', sans-serif !important;
+  color: #A89F8D;
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  margin-top: 0.3em;
+}
+
+// ===== Content slide headings =====
+.reveal h2 {
+  border-bottom: 2px solid #D8CFC0;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.5em;
+  color: #5A4E47;
+  font-weight: 600 !important;
+}
+
+// Strong text — dusty rose accent
+.reveal strong {
+  color: #B8807A;
+  font-weight: 700;
+}
+
+// Callout panels — soft mint
+.reveal .callout {
+  border-left: 4px solid #8AAE92;
+  background-color: #F2F4F0;
+  border-radius: 6px;
+  padding: 0.7em 1em;
+  margin-top: 0.6em;
+  font-size: 0.75em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.reveal .callout-body {
+  padding: 0 !important;
+}
+
+.reveal .callout ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.reveal .callout li {
+  margin-bottom: 0.3em;
+  line-height: 1.4;
+}
+
+.reveal .slide-number {
+  color: #A89F8D;
+  font-family: 'Quicksand', sans-serif !important;
+}

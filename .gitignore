@@ -5,5 +5,22 @@
 .DS_Store
 .quarto
 
+
 /.quarto/
+data
 **/*.quarto_ipynb
+.possitai
+# Quarto build artefacts
+_freeze/
+*.rmarkdown
+
+# R Studio / Posit files
+*.Rproj.user/
+
+# Backup files
+*~
+.~lock.*
+
+# Mac / OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,715 @@
+---
+title: "Profitability and Volatility"
+subtitle: "A Visual Analytics View of a Spanish Motor Portfolio"
+author: "Meng Xinyu"
+date-modified: last-modified
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    slide-number: true
+    transition: fade
+    width: 1400
+    height: 850
+    fig-align: center
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: auto
+---
+
+```{r}
+#| label: setup
+pacman::p_load(tidyverse, ggridges, ggdist, ggstatsplot,
+               ggcorrplot, treemapify, patchwork,
+               scales, knitr)
+
+#A unified warm muted palette to match the slide theme
+pal_main    <- "#A89F8D"   # warm beige
+pal_warn    <- "#C97B63"   # terracotta — for "needs attention"
+pal_good    <- "#8AAE92"   # mint — for "Good" / positive
+pal_rose    <- "#B8807A"   # dusty rose — accents
+pal_neutral <- "#C7BDA9"   # lighter beige — neutral category
+pal_bg      <- "#FBF8F4"   # cream background
+
+#Custom ggplot theme to match slide aesthetics
+theme_warm <- function(base_size = 13) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.background = element_rect(fill = pal_bg, color = NA),
+      panel.background = element_rect(fill = pal_bg, color = NA),
+      panel.grid.major = element_line(color = "#E8E2D5"),
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(color = "#5A4E47", face = "bold"),
+      plot.subtitle = element_text(color = "#7A6F66"),
+      axis.text = element_text(color = "#5A4E47"),
+      axis.title = element_text(color = "#5A4E47"),
+      strip.text = element_text(color = "#5A4E47", face = "bold"),
+      strip.background = element_rect(fill = "#EFE8DA", color = NA)
+    )
+}
+
+#Re-loading and preparing the data with the same logic as the technical report
+raw <- read_delim("data/Dataset of motor insurance portfolio.csv",
+                  delim = ";",
+                  locale = locale(decimal_mark = "."),
+                  show_col_types = FALSE)
+
+clean <- raw %>%
+  filter(!(total_premium == 0 & total_exposure == 0)) %>%
+  mutate(
+    policy_type = factor(policy_type,
+                         levels = c("TP", "TPG", "CC", "COMP_E", "COMP_N")),
+    bonus_score = factor(bonus_score, levels = c("B", "N", "G"),
+                         labels = c("Bad", "Neutral", "Good"), ordered = TRUE),
+    business_type = factor(business_type, levels = c("NB", "P"),
+                           labels = c("New business", "Portfolio")),
+    circulation_area = factor(circulation_area, levels = c("U", "R"),
+                              labels = c("Urban", "Rural")),
+    driver_age_band = cut(driver_age, breaks = c(-Inf, 25, 35, 50, 65, Inf),
+                          labels = c("<=25", "26-35", "36-50", "51-65", "65+")),
+    loss_ratio = if_else(total_premium > 0,
+                         total_incurred / total_premium, NA_real_),
+    frequency = if_else(total_exposure > 0,
+                        total_claims / total_exposure, NA_real_),
+    has_claim = total_claims > 0
+  )
+
+#Winsorise loss ratio at p99 for plotting
+lr_cap <- quantile(clean$loss_ratio, 0.99, na.rm = TRUE)
+clean <- clean %>%
+  mutate(loss_ratio_w = if_else(loss_ratio > lr_cap, lr_cap, loss_ratio))
+```
+
+## Background
+
+::::: columns
+::: {.column width="50%"}
+**The data**
+
+-   Spanish motor insurance portfolio
+-   354,140 policies, 2022 to 2024
+-   47 variables: policyholder, vehicle, premium, claims
+
+**Source**: García-Pérez (2024), Mendeley Data
+:::
+
+::: {.column width="50%"}
+**The business question**
+
+Which policy, driver and vehicle characteristics drive:
+
+1.  the portfolio's **profitability** (Loss Ratio)?
+2.  the portfolio's **volatility** (dispersion of Loss Ratio)?
+:::
+:::::
+
+::: notes
+This portfolio is loss-making on average and the underwriting team wants to understand why. We use visual analytics on the full 354,000-policy dataset to surface the variables most strongly associated with profitability and volatility. The headline outcome is Loss Ratio — incurred losses divided by premium — and we measure volatility through the coefficient of variation of Loss Ratio within risk segments.
+:::
+
+## Portfolio Snapshot
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  count(year) %>%
+  ggplot(aes(x = year, y = n)) +
+  geom_col(fill = pal_main) +
+  geom_text(aes(label = comma(n)), vjust = -0.3, size = 4.5,
+            color = "#5A4E47") +
+  scale_x_continuous(breaks = 2022:2024) +
+  scale_y_continuous(labels = label_comma(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Policy count grew 2.5x in three years",
+       x = NULL, y = "Number of policies") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  count(policy_type) %>%
+  mutate(share = n / sum(n)) %>%
+  ggplot(aes(x = fct_reorder(policy_type, share), y = share)) +
+  geom_col(fill = pal_main) +
+  geom_text(aes(label = percent(share, accuracy = 1)),
+            hjust = -0.2, size = 4.5, color = "#5A4E47") +
+  coord_flip() +
+  scale_y_continuous(labels = label_percent(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "CC dominates the policy mix",
+       x = NULL, y = NULL) +
+  theme_warm()
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   The portfolio **more than doubled** between 2022 and 2024 — any YoY KPI movement must be read in light of this rapid mix shift.
+-   **New business accounts for ≈ 70%** of policies each year — the book is in an aggressive acquisition phase, not a steady renewal state.
+-   **CC** (third-party + add-ons) covers nearly 60% of policies; the basic **TP** tier is the smallest segment.
+:::
+
+::: notes
+The portfolio more than doubled between 2022 and 2024 — any year-over-year movement in KPIs needs to be read in light of this rapid mix shift. New business accounts for about 70% of policies each year. On the product side, CC (third-party plus several add-ons) covers nearly 60% of the book, followed by COMP_E. The basic TP tier is the smallest segment.
+:::
+
+## COMP_N: highest loss ratio
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  group_by(policy_type) %>%
+  summarise(mean_lr = mean(loss_ratio_w, na.rm = TRUE)) %>%
+  ggplot(aes(x = fct_reorder(policy_type, mean_lr), y = mean_lr)) +
+  geom_col(aes(fill = mean_lr > 0.5)) +
+  geom_text(aes(label = round(mean_lr, 2)),
+            hjust = -0.2, size = 4.5, color = "#5A4E47") +
+  coord_flip() +
+  scale_fill_manual(values = c("TRUE" = pal_warn, "FALSE" = pal_main),
+                    guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Mean Loss Ratio by Policy Type",
+       x = NULL, y = "Mean loss ratio") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio_w), loss_ratio_w > 0) %>%
+  ggplot(aes(x = loss_ratio_w, y = policy_type,
+             fill = policy_type)) +
+  geom_density_ridges(scale = 1.5, rel_min_height = 0.01,
+                      alpha = 0.75) +
+  scale_fill_manual(values = c("TP"     = pal_good,
+                               "TPG"    = pal_neutral,
+                               "CC"     = pal_main,
+                               "COMP_E" = pal_rose,
+                               "COMP_N" = pal_warn),
+                    guide = "none") +
+  labs(title = "Loss Ratio Distribution by Policy Type",
+       x = "Loss ratio (loss-bearing policies)", y = NULL) +
+  theme_ridges(font_size = 12) +
+  theme(plot.background = element_rect(fill = pal_bg, color = NA),
+        panel.background = element_rect(fill = pal_bg, color = NA))
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   **COMP_N** has a mean Loss Ratio of **0.82**, roughly double the rest of the book and well above the break-even line of 1.0.
+-   The distribution shape on the right shows COMP_N carries both a higher peak and a fatter right tail — more frequent moderate losses and more extreme outliers.
+-   Repricing or restructuring this single product is the most direct lever available to underwriting; it covers ≈ 16,000 policies.
+:::
+
+::: notes
+COMP_N — comprehensive cover without an excess — has a mean Loss Ratio of 0.82, roughly double the rest of the book. The ridge plot on the right shows the reason: COMP_N has both a higher peak and a fatter right tail, meaning more frequent moderate losses and more extreme outliers. Repricing or restructuring this single product is the most direct lever the underwriting team has on profitability.
+:::
+
+## Bonus score predicts claim frequency
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(frequency)) %>%
+  group_by(bonus_score) %>%
+  summarise(mean_freq = mean(frequency)) %>%
+  ggplot(aes(x = bonus_score, y = mean_freq)) +
+  geom_col(aes(fill = bonus_score)) +
+  geom_text(aes(label = round(mean_freq, 2)),
+            vjust = -0.3, size = 4.5, color = "#5A4E47") +
+  scale_fill_manual(values = c("Bad"     = pal_warn,
+                               "Neutral" = pal_main,
+                               "Good"    = pal_good),
+                    guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Mean Claim Frequency by Bonus Score",
+       x = NULL, y = "Claims per policy-year") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  count(bonus_score, has_claim) %>%
+  group_by(bonus_score) %>%
+  mutate(share = n / sum(n)) %>%
+  ggplot(aes(x = bonus_score, y = share, fill = has_claim)) +
+  geom_col() +
+  geom_text(data = . %>% filter(has_claim),
+            aes(label = percent(share, accuracy = 1)),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 4.5) +
+  scale_y_continuous(labels = label_percent()) +
+  scale_fill_manual(values = c("FALSE" = "#D8CFC0",
+                               "TRUE"  = pal_warn),
+                    labels = c("No claim", "Has claim")) +
+  labs(title = "Share of Policies with at Least One Claim",
+       x = NULL, y = NULL, fill = NULL) +
+  theme_warm() +
+  theme(legend.position = "bottom")
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   **Bad-bonus** drivers file **0.71 claims per policy-year** versus **0.31** for Good — a **2.3× gap**.
+-   **22%** of Bad-bonus policies had at least one claim, vs **14%** for Good — chi-square test confirms p \< 0.001.
+-   The bonus-malus system therefore mainly captures **frequency** risk; the bigger the bonus discount, the rarer the claim filing.
+:::
+
+::: notes
+The Spanish bonus-malus system works as intended. Bad-bonus drivers report 0.71 claims per policy-year versus 0.31 for Good-bonus drivers — a 2.3× gap that a chi-square test confirms is highly significant. The right chart shows the same pattern from a different angle: 22% of Bad-bonus policies had at least one claim, against 14% for Good. The bonus score therefore captures frequency risk far more strongly than severity risk.
+:::
+
+## Bonus does not predict severity
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  mutate(severity = if_else(total_claims > 0,
+                            total_incurred / total_claims,
+                            NA_real_)) %>%
+  filter(!is.na(severity), severity > 0,
+         severity <= quantile(severity, 0.99, na.rm = TRUE)) %>%
+  ggplot(aes(x = bonus_score, y = severity, fill = bonus_score)) +
+  geom_violin(alpha = 0.75, show.legend = FALSE) +
+  geom_boxplot(width = 0.15, fill = "white",
+               outlier.shape = NA, show.legend = FALSE) +
+  scale_y_log10(labels = label_number(big.mark = ",")) +
+  scale_fill_manual(values = c("Bad"     = pal_warn,
+                               "Neutral" = pal_main,
+                               "Good"    = pal_good)) +
+  labs(title = "Claim Severity Distribution by Bonus Score",
+       subtitle = "Loss-bearing policies, log scale",
+       x = NULL, y = "Severity (EUR, log scale)") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+tibble(
+  bonus = factor(c("Bad", "Neutral", "Good"),
+                 levels = c("Bad", "Neutral", "Good")),
+  frequency_ratio = c(0.71/0.31, 0.55/0.31, 0.31/0.31),
+  severity_ratio  = c(998/840, 1000/840, 840/840)
+) %>%
+  pivot_longer(-bonus, names_to = "metric", values_to = "ratio") %>%
+  mutate(metric = recode(metric,
+                         "frequency_ratio" = "Frequency (vs Good)",
+                         "severity_ratio"  = "Severity (vs Good)")) %>%
+  ggplot(aes(x = bonus, y = ratio, fill = metric)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6) +
+  geom_text(aes(label = paste0(round(ratio, 2), "x")),
+            position = position_dodge(width = 0.7),
+            vjust = -0.3, size = 4, color = "#5A4E47") +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "#A89F8D") +
+  scale_fill_manual(values = c("Frequency (vs Good)" = pal_warn,
+                               "Severity (vs Good)"  = pal_main)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Frequency vs Severity Ratios",
+       subtitle = "Indexed to Good-bonus group = 1.0",
+       x = NULL, y = "Ratio", fill = NULL) +
+  theme_warm() +
+  theme(legend.position = "bottom")
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   Claim **severity** distributions overlap almost perfectly across the three bonus groups — same median (≈ EUR 500), same shape.
+-   Bad-bonus drivers claim **2.3× more often** (frequency) but each claim is only **1.19× more expensive** (severity).
+-   Pricing models that already include the bonus discount **do not need** additional severity loading for Bad-bonus drivers.
+:::
+
+::: notes
+The violin plot on the left shows that the distribution of claim severity is nearly identical across bonus groups — same shape, same median (around EUR 500). The bar chart on the right makes the contrast explicit: Bad-bonus drivers file claims 2.3 times more often than Good, but each individual claim is only 1.19 times more expensive on average. This is an important pricing insight. The bonus-malus system effectively prices risky drivers by predicting how often they will crash, not how severely. Pricing models that already include the bonus discount do not need additional severity loading for Bad-bonus drivers.
+:::
+
+## Driver age: U-shape
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio_w), !is.na(driver_age_band)) %>%
+  group_by(driver_age_band) %>%
+  summarise(mean_lr = mean(loss_ratio_w)) %>%
+  ggplot(aes(x = driver_age_band, y = mean_lr, group = 1)) +
+  geom_line(color = pal_main, linewidth = 1.2) +
+  geom_point(color = pal_warn, size = 4) +
+  geom_text(aes(label = round(mean_lr, 2)),
+            vjust = -1, size = 4.5, color = "#5A4E47") +
+  scale_y_continuous(expand = expansion(mult = c(0.1, 0.2))) +
+  labs(title = "Mean Loss Ratio by Driver Age",
+       x = "Driver age band", y = "Mean loss ratio") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio_w), !is.na(driver_age_band)) %>%
+  group_by(driver_age_band, bonus_score) %>%
+  summarise(mean_lr = mean(loss_ratio_w), .groups = "drop") %>%
+  ggplot(aes(x = driver_age_band, y = mean_lr,
+             group = bonus_score, color = bonus_score)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("Bad"     = pal_warn,
+                                "Neutral" = pal_main,
+                                "Good"    = pal_good)) +
+  labs(title = "Loss Ratio by Age × Bonus Score",
+       x = "Driver age band", y = "Mean loss ratio",
+       color = "Bonus") +
+  theme_warm() +
+  theme(legend.position = "bottom")
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   Loss Ratio **peaks at age extremes** (≤25 and ≥65) and **bottoms out in the 36–50 band** — the classic motor underwriting U-shape.
+-   The U-shape **repeats within every bonus group**, but the gap between Bad and Good widens at the extremes.
+-   The **worst sub-segment** in the entire portfolio is young drivers (≤25) carrying a Bad bonus score.
+:::
+
+::: notes
+Loss Ratio peaks at the two age extremes — drivers aged 25 and under and drivers aged 65 and over — and bottoms out in the 36-50 band. This is the classic U-shape that motor underwriters expect. The right panel shows the U-shape repeats inside every bonus group, but the gap widens at the extremes. Young Bad-bonus drivers are by far the most loss-making sub-segment in the portfolio.
+:::
+
+## Profit ≠ Stability
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio_w)) %>%
+  group_by(policy_type) %>%
+  summarise(mean_lr = mean(loss_ratio_w),
+            cv = sd(loss_ratio_w) / mean_lr) %>%
+  ggplot(aes(x = fct_reorder(policy_type, cv), y = cv)) +
+  geom_col(fill = pal_warn) +
+  geom_text(aes(label = round(cv, 2)),
+            hjust = -0.2, size = 4.5, color = "#5A4E47") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Loss Ratio Volatility by Policy Type",
+       subtitle = "Coefficient of variation",
+       x = NULL, y = "Coefficient of variation") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio_w)) %>%
+  group_by(bonus_score) %>%
+  summarise(mean_lr = mean(loss_ratio_w),
+            cv = sd(loss_ratio_w) / mean_lr) %>%
+  ggplot(aes(x = bonus_score, y = cv)) +
+  geom_col(aes(fill = bonus_score)) +
+  geom_text(aes(label = round(cv, 2)),
+            vjust = -0.3, size = 4.5, color = "#5A4E47") +
+  scale_fill_manual(values = c("Bad"     = pal_warn,
+                               "Neutral" = pal_main,
+                               "Good"    = pal_good),
+                    guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Loss Ratio Volatility by Bonus Score",
+       subtitle = "Coefficient of variation",
+       x = NULL, y = "Coefficient of variation") +
+  theme_warm()
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   **TP** has the **lowest mean** Loss Ratio (0.31) but the **highest CV** (5.19) — profitable on average yet exposed to severe spikes.
+-   The **Good-bonus** group is the most profitable yet has the **highest CV** — low losses are usually small, but rare large losses still occur.
+-   Profitability and volatility must be managed as **two separate KPIs**; tracking only the mean hides accumulating tail risk.
+:::
+
+::: notes
+The most profitable segments are not always the most stable. TP — the cheapest third-party tier — has the lowest mean Loss Ratio but the highest coefficient of variation because a small number of severe liability claims swing the segment. Similarly, the Good-bonus group has the highest CV despite being the most profitable on average. Profitability and volatility therefore need separate management — pricing alone is not enough.
+:::
+
+## Tail risk: concentrated, not random
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio)) %>%
+  mutate(lr_band = case_when(
+    loss_ratio == 0 ~ "0",
+    loss_ratio <= 0.5 ~ "(0, 0.5]",
+    loss_ratio <= 1 ~ "(0.5, 1]",
+    loss_ratio <= 2 ~ "(1, 2]",
+    TRUE ~ ">2"
+  ) %>% factor(levels = c("0", "(0, 0.5]", "(0.5, 1]",
+                          "(1, 2]", ">2"))) %>%
+  count(bonus_score, lr_band) %>%
+  group_by(bonus_score) %>%
+  mutate(share = n / sum(n)) %>%
+  ggplot(aes(x = lr_band, y = bonus_score, fill = share)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = percent(share, accuracy = 0.1)),
+            size = 4, color = "#3F3A36") +
+  scale_fill_gradient(low = "#F2EDE3", high = pal_warn,
+                      labels = label_percent()) +
+  labs(title = "Loss Ratio Band Share by Bonus Score",
+       x = "Loss ratio band", y = NULL, fill = "Share") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+clean %>%
+  filter(!is.na(loss_ratio), loss_ratio > 0) %>%
+  group_by(policy_type) %>%
+  summarise(tail_share = mean(loss_ratio > 2)) %>%
+  ggplot(aes(x = fct_reorder(policy_type, tail_share),
+             y = tail_share)) +
+  geom_col(fill = pal_warn) +
+  geom_text(aes(label = percent(tail_share, accuracy = 0.1)),
+            hjust = -0.2, size = 4.5, color = "#5A4E47") +
+  coord_flip() +
+  scale_y_continuous(labels = label_percent(),
+                     expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Share of Loss-Bearing Policies with LR > 2",
+       x = NULL, y = "Tail share") +
+  theme_warm()
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   The heatmap shows **Bad-bonus** policies are **2× more likely** to fall into the highest loss-ratio bands (\>1) than Good-bonus policies.
+-   Among loss-bearing policies, **COMP_N** has the largest share with **Loss Ratio above 2** — paying out more than twice the premium collected.
+-   Tail risk is **not random** — it concentrates exactly where the mean Loss Ratio is also highest.
+:::
+
+::: notes
+The heatmap on the left shows that Bad-bonus policyholders are roughly twice as likely as Good-bonus ones to fall into the most loss-making bands above LR \> 1. The right chart isolates the tail: among loss-bearing policies, COMP_N has the highest share with Loss Ratio above 2 — the policies that pay out more than twice the premium collected. Tail risk is therefore concentrated where mean Loss Ratio is also highest.
+:::
+
+## Geography and fuel: small effects
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+bind_rows(
+  clean %>% filter(!is.na(loss_ratio_w)) %>%
+    group_by(group = as.character(municipality_type)) %>%
+    summarise(mean_lr = mean(loss_ratio_w)) %>%
+    mutate(dimension = "Municipality"),
+  clean %>% filter(!is.na(loss_ratio_w)) %>%
+    group_by(group = as.character(circulation_area)) %>%
+    summarise(mean_lr = mean(loss_ratio_w)) %>%
+    mutate(dimension = "Circulation"),
+  clean %>% filter(!is.na(loss_ratio_w), !is.na(fuel_type)) %>%
+    group_by(group = as.character(fuel_type)) %>%
+    summarise(mean_lr = mean(loss_ratio_w)) %>%
+    mutate(dimension = "Fuel type")
+) %>%
+  ggplot(aes(x = group, y = mean_lr)) +
+  geom_col(fill = pal_main) +
+  geom_text(aes(label = round(mean_lr, 2)),
+            vjust = -0.3, size = 4, color = "#5A4E47") +
+  facet_wrap(~ dimension, scales = "free_x") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Mean Loss Ratio across Geographic & Fuel Dimensions",
+       x = NULL, y = "Mean loss ratio") +
+  theme_warm()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+tibble(
+  dimension = c("Policy type", "Bonus score", "Driver age",
+                "Fuel type", "Circulation", "Municipality"),
+  range = c(0.82 - 0.31,
+            0.56 - 0.42,
+            0.55 - 0.39,
+            0.83 - 0.72,
+            0.82 - 0.76,
+            0.79 - 0.78)
+) %>%
+  ggplot(aes(x = range, y = fct_reorder(dimension, range))) +
+  geom_col(aes(fill = range > 0.1)) +
+  geom_text(aes(label = round(range, 2)),
+            hjust = -0.2, size = 4.5, color = "#5A4E47") +
+  scale_fill_manual(values = c("TRUE"  = pal_warn,
+                               "FALSE" = pal_neutral),
+                    guide = "none") +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(title = "Effect Size by Dimension",
+       subtitle = "Range of mean Loss Ratio across groups",
+       x = "Max - Min of mean Loss Ratio", y = NULL) +
+  theme_warm()
+```
+:::
+:::::
+
+::: {.callout-note appearance="simple" icon="false"}
+-   Geographic (municipality, urban/rural) and fuel-type splits produce **\<0.12** of Loss Ratio difference — statistically significant but practically small.
+-   Compared to the **0.51 spread** driven by policy type and **0.16** by driver age, these are **second-order effects**.
+-   Pricing effort should concentrate on the **top three dimensions**: policy type, bonus score, and driver age.
+:::
+
+::: notes
+Geography and fuel type are statistically significant — with 354,000 observations almost everything is — but the magnitudes are small. Rural beats Urban by 0.07 of Loss Ratio, and Diesel exceeds Gasoline by 0.11. Compared to the 0.51 spread driven by policy type or the 0.16 U-shape across driver age, these are second-order effects. The right chart ranks all six dimensions by the size of the spread they produce; the bottom three are too small to justify their own pricing factor. Pricing effort should concentrate on the top three dimensions: policy type, bonus, and driver age.
+:::
+
+## Business Impacts: Pricing & Product
+
+::::: columns
+::: {.column width="50%"}
+**Re-price or restructure COMP_N**
+
+-   Mean LR = 0.82, ≈ 2× the rest of the book
+-   Highest tail share (LR \> 2)
+-   ≈ 16,000 policies — meaningful portfolio impact
+
+**Apply differentiated underwriting** to drivers ≤ 25 with Bad bonus
+
+-   Worst sub-segment (age extreme × frequency risk)
+-   Tighter UW rules, mandatory excess, or selective non-renewal
+:::
+
+::: {.column width="50%"}
+**Re-examine TP pricing & reinsurance**
+
+-   Mean LR low (0.31) but **highest CV (5.19)**
+-   Exposed to severe liability claims
+-   Review excess-of-loss reinsurance structures
+:::
+:::::
+
+::: notes
+These are the three highest-leverage pricing actions. Re-pricing COMP_N to the portfolio average would lift overall Loss Ratio by 1.5 to 2.0 percentage points on its own. The young Bad-bonus underwriting tightening adds roughly another point. Combined, these actions could improve underwriting result by close to 3 percentage points of Loss Ratio without launching a single new product — by far the highest-ROI moves available to the underwriting team.
+:::
+
+## Business Impacts: Portfolio Management
+
+::::: columns
+::: {.column width="50%"}
+**Track profitability and volatility separately**
+
+-   Most profitable segments are **not** the most stable
+-   Mean LR alone hides tail risk
+-   Add CV / tail share to standard reporting
+
+**Adjust for new-business mix**
+
+-   ≈ 70% of policies are new each year
+-   Headline trends confounded by mix shift
+-   Use stratified or mix-adjusted KPIs
+:::
+
+::: {.column width="50%"}
+**Focus monitoring on 5 risk cells**
+
+1.  COMP_N policies (all)
+2.  Drivers ≤ 25 with Bad bonus
+3.  Drivers ≥ 65 (all bonus levels)
+4.  TP policies (volatility watch)
+5.  Policies with prior-year LR \> 2
+
+These cells capture most of the portfolio's downside.
+:::
+:::::
+
+::: notes
+On the portfolio management side, the main shift is conceptual: profitability and volatility must be managed as two separate dimensions. The five risk cells listed on the right give the underwriting committee a focused watchlist instead of monitoring dozens of metrics across all dimensions. The mix-adjustment point matters because the book is in an aggressive growth phase — headline KPI movements would otherwise be confounded by changing new-business share.
+:::
+
+## References
+
+::::: columns
+::: {.column width="50%"}
+**Data**
+
+-   García-Pérez (2024). *Dataset of motor insurance portfolio*. Mendeley Data V1.
+
+**Methodology**
+
+-   Kam, T. S. (2024). *R for Visual Analytics*. SMU.
+-   Werner & Modlin (2016). *Basic Ratemaking*. CAS.
+:::
+
+::: {.column width="50%"}
+**R packages**
+
+-   `tidyverse` — Wickham et al. (2019)
+-   `ggstatsplot` — Patil (2021)
+-   `ggridges` — Wilke (2024)
+-   `ggdist` — Kay (2024)
+-   `ggcorrplot` — Kassambara (2023)
+-   `treemapify` — Wilkins (2023)
+-   `patchwork` — Pedersen (2024)
+:::
+:::::
+
+::: notes
+Full citations and links are provided in the technical report. All visualisations in this presentation were produced in R using the tidyverse and the ggplot2 ecosystem.
+:::
+
+## Thank you
+
+::: {style="text-align: center; margin-top: 2em;"}
+For the full data preparation, methodology and complete bivariate analysis:
+
+[**→ Read the Technical Report**](Take-home_Ex01.html)
+:::
+
+::: notes
+The technical report contains the complete reproducible workflow — data import, cleaning, KPI engineering, univariate and bivariate analysis with all statistical tests, and an extended business impact section. Thank you for your attention.
+:::

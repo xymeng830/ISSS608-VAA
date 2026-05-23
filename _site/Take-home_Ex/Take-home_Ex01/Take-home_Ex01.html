@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Meng Xinyu">
+
+<title>Take-home_Ex01 – ISSS608-VAA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d2f1e7c476fd8c942dd79011a687d184.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html">
+ <span class="dropdown-text">Hands-on Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html">
+ <span class="dropdown-text">Hands-on Exercise 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03-02/Hands-on_Ex03-02.html">
+ <span class="dropdown-text">Hands-on Exercise 3-02</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html">
+ <span class="dropdown-text">Hands-on Exercise 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html">
+ <span class="dropdown-text">Hands-on Exercise 5</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercises" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercises">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html">
+ <span class="dropdown-text">Take-home Ex 01</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1 Overview</strong></a>
+  <ul class="collapse">
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link" data-scroll-target="#executive-summary"><strong>Executive Summary</strong></a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><strong>2 Getting Started</strong></a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><strong>3 Data Preparation</strong></a>
+  <ul class="collapse">
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><strong>3.1 Importing Data</strong></a></li>
+  <li><a href="#checking-missing-values" id="toc-checking-missing-values" class="nav-link" data-scroll-target="#checking-missing-values"><strong>3.2 Checking Missing Values</strong></a></li>
+  <li><a href="#edge-case-audit" id="toc-edge-case-audit" class="nav-link" data-scroll-target="#edge-case-audit"><strong>3.3 Edge Case Audit</strong></a></li>
+  <li><a href="#cleaning-and-converting-variables" id="toc-cleaning-and-converting-variables" class="nav-link" data-scroll-target="#cleaning-and-converting-variables"><strong>3.4 Cleaning and Converting Variables</strong></a></li>
+  <li><a href="#creating-profitability-and-volatility-kpis" id="toc-creating-profitability-and-volatility-kpis" class="nav-link" data-scroll-target="#creating-profitability-and-volatility-kpis"><strong>3.5 Creating Profitability and Volatility KPIs</strong></a></li>
+  <li><a href="#creating-age-bands" id="toc-creating-age-bands" class="nav-link" data-scroll-target="#creating-age-bands"><strong>3.6 Creating Age Bands</strong></a></li>
+  <li><a href="#sandbox-summary" id="toc-sandbox-summary" class="nav-link" data-scroll-target="#sandbox-summary"><strong>3.7 Sandbox Summary</strong></a></li>
+  </ul></li>
+  <li><a href="#univariate-visual-analysis" id="toc-univariate-visual-analysis" class="nav-link" data-scroll-target="#univariate-visual-analysis"><strong>4 Univariate Visual Analysis</strong></a>
+  <ul class="collapse">
+  <li><a href="#numerical-variables" id="toc-numerical-variables" class="nav-link" data-scroll-target="#numerical-variables"><strong>4.1 Numerical Variables</strong></a>
+  <ul class="collapse">
+  <li><a href="#driver-age" id="toc-driver-age" class="nav-link" data-scroll-target="#driver-age"><strong>4.1.1 Driver Age</strong></a></li>
+  <li><a href="#vehicle-age" id="toc-vehicle-age" class="nav-link" data-scroll-target="#vehicle-age"><strong>4.1.2 Vehicle Age</strong></a></li>
+  <li><a href="#vehicle-value" id="toc-vehicle-value" class="nav-link" data-scroll-target="#vehicle-value"><strong>4.1.3 Vehicle Value</strong></a></li>
+  <li><a href="#total-premium" id="toc-total-premium" class="nav-link" data-scroll-target="#total-premium"><strong>4.1.4 Total Premium</strong></a></li>
+  <li><a href="#total-incurred-claims-with-losses-only" id="toc-total-incurred-claims-with-losses-only" class="nav-link" data-scroll-target="#total-incurred-claims-with-losses-only"><strong>4.1.5 Total Incurred (Claims with losses only)</strong></a></li>
+  <li><a href="#loss-ratio" id="toc-loss-ratio" class="nav-link" data-scroll-target="#loss-ratio"><strong>4.1.6 Loss Ratio</strong></a></li>
+  </ul></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables"><strong>4.2 Categorical Variables</strong></a>
+  <ul class="collapse">
+  <li><a href="#policy-type" id="toc-policy-type" class="nav-link" data-scroll-target="#policy-type"><strong>4.2.1 Policy Type</strong></a></li>
+  <li><a href="#bonus-score" id="toc-bonus-score" class="nav-link" data-scroll-target="#bonus-score"><strong>4.2.2 Bonus Score</strong></a></li>
+  <li><a href="#municipality-and-circulation-area" id="toc-municipality-and-circulation-area" class="nav-link" data-scroll-target="#municipality-and-circulation-area"><strong>4.2.3 Municipality and Circulation Area</strong></a></li>
+  <li><a href="#vehicle-brand-top-15" id="toc-vehicle-brand-top-15" class="nav-link" data-scroll-target="#vehicle-brand-top-15"><strong>4.2.4 Vehicle Brand (Top 15)</strong></a></li>
+  <li><a href="#vehicle-brand-composition-treemap" id="toc-vehicle-brand-composition-treemap" class="nav-link" data-scroll-target="#vehicle-brand-composition-treemap"><strong>4.2.5 Vehicle Brand Composition (Treemap)</strong></a></li>
+  </ul></li>
+  <li><a href="#temporal-patterns" id="toc-temporal-patterns" class="nav-link" data-scroll-target="#temporal-patterns"><strong>4.3 Temporal Patterns</strong></a>
+  <ul class="collapse">
+  <li><a href="#portfolio-growth-over-time" id="toc-portfolio-growth-over-time" class="nav-link" data-scroll-target="#portfolio-growth-over-time"><strong>4.3.1 Portfolio Growth Over Time</strong></a></li>
+  <li><a href="#new-business-vs-portfolio-by-year" id="toc-new-business-vs-portfolio-by-year" class="nav-link" data-scroll-target="#new-business-vs-portfolio-by-year"><strong>4.3.2 New Business vs Portfolio by Year</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#bivariate-visual-analysis" id="toc-bivariate-visual-analysis" class="nav-link" data-scroll-target="#bivariate-visual-analysis"><strong>5 Bivariate Visual Analysis</strong></a>
+  <ul class="collapse">
+  <li><a href="#drivers-of-profitability" id="toc-drivers-of-profitability" class="nav-link" data-scroll-target="#drivers-of-profitability"><strong>5.1 Drivers of Profitability</strong></a>
+  <ul class="collapse">
+  <li><a href="#bonus-score-and-loss-ratio" id="toc-bonus-score-and-loss-ratio" class="nav-link" data-scroll-target="#bonus-score-and-loss-ratio"><strong>5.1.1 Bonus Score and Loss Ratio</strong></a></li>
+  <li><a href="#policy-type-and-loss-ratio" id="toc-policy-type-and-loss-ratio" class="nav-link" data-scroll-target="#policy-type-and-loss-ratio"><strong>5.1.2 Policy Type and Loss Ratio</strong></a></li>
+  <li><a href="#circulation-area-and-loss-ratio" id="toc-circulation-area-and-loss-ratio" class="nav-link" data-scroll-target="#circulation-area-and-loss-ratio"><strong>5.1.3 Circulation Area and Loss Ratio</strong></a></li>
+  <li><a href="#driver-age-and-loss-ratio" id="toc-driver-age-and-loss-ratio" class="nav-link" data-scroll-target="#driver-age-and-loss-ratio"><strong>5.1.4 Driver Age and Loss Ratio</strong></a></li>
+  <li><a href="#fuel-type-and-loss-ratio" id="toc-fuel-type-and-loss-ratio" class="nav-link" data-scroll-target="#fuel-type-and-loss-ratio"><strong>5.1.5 Fuel Type and Loss Ratio</strong></a></li>
+  <li><a href="#bonus-score-and-claim-frequency" id="toc-bonus-score-and-claim-frequency" class="nav-link" data-scroll-target="#bonus-score-and-claim-frequency"><strong>5.1.6 Bonus Score and Claim Frequency</strong></a></li>
+  </ul></li>
+  <li><a href="#drivers-of-volatility" id="toc-drivers-of-volatility" class="nav-link" data-scroll-target="#drivers-of-volatility"><strong>5.2 Drivers of Volatility</strong></a>
+  <ul class="collapse">
+  <li><a href="#coefficient-of-variation-by-policy-type" id="toc-coefficient-of-variation-by-policy-type" class="nav-link" data-scroll-target="#coefficient-of-variation-by-policy-type"><strong>5.2.1 Coefficient of Variation by Policy Type</strong></a></li>
+  <li><a href="#ridge-plot-of-loss-ratio-by-policy-type" id="toc-ridge-plot-of-loss-ratio-by-policy-type" class="nav-link" data-scroll-target="#ridge-plot-of-loss-ratio-by-policy-type"><strong>5.2.2 Ridge Plot of Loss Ratio by Policy Type</strong></a></li>
+  <li><a href="#coefficient-of-variation-by-bonus-score" id="toc-coefficient-of-variation-by-bonus-score" class="nav-link" data-scroll-target="#coefficient-of-variation-by-bonus-score"><strong>5.2.3 Coefficient of Variation by Bonus Score</strong></a></li>
+  <li><a href="#loss-ratio-band-bonus-score-heatmap" id="toc-loss-ratio-band-bonus-score-heatmap" class="nav-link" data-scroll-target="#loss-ratio-band-bonus-score-heatmap"><strong>5.2.4 Loss Ratio Band × Bonus Score (Heatmap)</strong></a></li>
+  </ul></li>
+  <li><a href="#multivariate-patterns" id="toc-multivariate-patterns" class="nav-link" data-scroll-target="#multivariate-patterns"><strong>5.3 Multivariate Patterns</strong></a>
+  <ul class="collapse">
+  <li><a href="#has-claim-bonus-score-stacked-bar-with-chi-square" id="toc-has-claim-bonus-score-stacked-bar-with-chi-square" class="nav-link" data-scroll-target="#has-claim-bonus-score-stacked-bar-with-chi-square"><strong>5.3.1 Has-Claim × Bonus Score (Stacked Bar with Chi-Square)</strong></a></li>
+  <li><a href="#loss-ratio-by-driver-age-band-and-bonus-score-faceted" id="toc-loss-ratio-by-driver-age-band-and-bonus-score-faceted" class="nav-link" data-scroll-target="#loss-ratio-by-driver-age-band-and-bonus-score-faceted"><strong>5.3.2 Loss Ratio by Driver Age Band and Bonus Score (Faceted)</strong></a></li>
+  <li><a href="#correlation-heatmap-of-numerical-variables" id="toc-correlation-heatmap-of-numerical-variables" class="nav-link" data-scroll-target="#correlation-heatmap-of-numerical-variables"><strong>5.3.3 Correlation Heatmap of Numerical Variables</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><strong>6 Key Takeaways</strong></a></li>
+  <li><a href="#business-impacts" id="toc-business-impacts" class="nav-link" data-scroll-target="#business-impacts"><strong>7 Business Impacts</strong></a>
+  <ul class="collapse">
+  <li><a href="#pricing-and-product" id="toc-pricing-and-product" class="nav-link" data-scroll-target="#pricing-and-product"><strong>7.1 Pricing and Product</strong></a></li>
+  <li><a href="#portfolio-management-and-reporting" id="toc-portfolio-management-and-reporting" class="nav-link" data-scroll-target="#portfolio-management-and-reporting"><strong>7.2 Portfolio Management and Reporting</strong></a></li>
+  <li><a href="#expected-financial-impact" id="toc-expected-financial-impact" class="nav-link" data-scroll-target="#expected-financial-impact"><strong>7.3 Expected Financial Impact</strong></a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>8 References</strong></a>
+  <ul class="collapse">
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><strong>8.1 Data Source</strong></a></li>
+  <li><a href="#r-packages-used" id="toc-r-packages-used" class="nav-link" data-scroll-target="#r-packages-used"><strong>8.2 R Packages Used</strong></a></li>
+  <li><a href="#methodology-references" id="toc-methodology-references" class="nav-link" data-scroll-target="#methodology-references"><strong>8.3 Methodology References</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take-home_Ex01</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Meng Xinyu </p>
+          </div>
+  </div>
+    
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">May 23, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1><strong>1 Overview</strong></h1>
+<p>This take-home exercise applies visual analytics to a real Spanish motor insurance portfolio. The goal is to identify factors driving the portfolio’s profitability and volatility through univariate and bivariate visual exploration with statistical validation.</p>
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary"><strong>Executive Summary</strong></h2>
+<p>The following slide deck condenses the five key insights and recommended business actions. Use the arrow keys or click the navigation arrows on the slide to flip through. The full technical walkthrough — data preparation, methodology and complete bivariate analysis — follows below.</p>
+<iframe class="slide-deck" src="Take-home_Ex01_slides.html" width="100%" height="600px" style="border: 1px solid #D8CFC0; border-radius: 8px; 
+               box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin: 1em 0;">
+</iframe>
+<p><a href="Take-home_Ex01_slides.html" target="_blank"><strong>↗ Open the presentation in full screen</strong></a></p>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1><strong>2 Getting Started</strong></h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading R packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, ggridges, ggdist, ggstatsplot, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               ggcorrplot, treemapify, patchwork, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               scales, skimr, knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="data-preparation" class="level1">
+<h1><strong>3 Data Preparation</strong></h1>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data"><strong>3.1 Importing Data</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Importing data with semicolon separator</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/Dataset of motor insurance portfolio.csv"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">"."</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(raw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 354140     47</code></pre>
+</div>
+</div>
+<p>The raw dataset contains 354,140 policy records across 47 variables, covering the years 2022–2024.</p>
+</section>
+<section id="checking-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="checking-missing-values"><strong>3.2 Checking Missing Values</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Counting missing values per column</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>raw <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.)))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"n_missing"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n_missing <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_missing))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  variable            n_missing
+  &lt;chr&gt;                   &lt;int&gt;
+1 fuel_type                1287
+2 vehicle_value             513
+3 vehicle_age                 2
+4 age_driving_licence         2</code></pre>
+</div>
+</div>
+<p>Only four variables contain missing values, with <code>fuel_type</code> having the most (≈ 0.4%). The missingness is low enough to keep all rows.</p>
+</section>
+<section id="edge-case-audit" class="level2">
+<h2 class="anchored" data-anchor-id="edge-case-audit"><strong>3.3 Edge Case Audit</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Auditing edge cases that affect KPI denominators</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">check =</span> <span class="fu">c</span>(<span class="st">"total_premium == 0"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"total_exposure == 0"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"total_claims &gt; 0 but total_incurred == 0"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"vehicle_age &gt; 50"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">c</span>(<span class="fu">sum</span>(raw<span class="sc">$</span>total_premium <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(raw<span class="sc">$</span>total_exposure <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(raw<span class="sc">$</span>total_claims <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> raw<span class="sc">$</span>total_incurred <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(raw<span class="sc">$</span>vehicle_age <span class="sc">&gt;</span> <span class="dv">50</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  check                                        n
+  &lt;chr&gt;                                    &lt;int&gt;
+1 total_premium == 0                          49
+2 total_exposure == 0                         49
+3 total_claims &gt; 0 but total_incurred == 0  8543
+4 vehicle_age &gt; 50                          3724</code></pre>
+</div>
+</div>
+<p>49 records have both zero premium and zero exposure — these will be dropped as they cannot support ratio computations. The 8,543 records with claims but zero incurred cost are kept (likely IBNR or zero-reserve open claims).</p>
+</section>
+<section id="cleaning-and-converting-variables" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-and-converting-variables"><strong>3.4 Cleaning and Converting Variables</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dropping zero-exposure records and converting categorical variables to factors</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clean <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(total_premium <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> total_exposure <span class="sc">==</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">policy_type =</span> <span class="fu">factor</span>(policy_type,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"TP"</span>, <span class="st">"TPG"</span>, <span class="st">"CC"</span>, <span class="st">"COMP_E"</span>, <span class="st">"COMP_N"</span>)),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">policy_status =</span> <span class="fu">factor</span>(policy_status, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"C"</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Active"</span>, <span class="st">"Cancelled"</span>)),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">business_type =</span> <span class="fu">factor</span>(business_type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"NB"</span>, <span class="st">"P"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"New business"</span>, <span class="st">"Portfolio"</span>)),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fuel_type =</span> <span class="fu">factor</span>(fuel_type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"D"</span>, <span class="st">"G"</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Diesel"</span>, <span class="st">"Gasoline"</span>)),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">municipality_type =</span> <span class="fu">factor</span>(municipality_type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"I"</span>, <span class="st">"C"</span>, <span class="st">"IS"</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Inland"</span>, <span class="st">"Coastal"</span>, <span class="st">"Islands"</span>)),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">circulation_area =</span> <span class="fu">factor</span>(circulation_area, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"U"</span>, <span class="st">"R"</span>),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>)),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">payment_frequency =</span> <span class="fu">factor</span>(payment_frequency, </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"S"</span>, <span class="st">"Q"</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Annual"</span>, <span class="st">"Semi-annual"</span>, <span class="st">"Quarterly"</span>),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">bonus_score =</span> <span class="fu">factor</span>(bonus_score, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"N"</span>, <span class="st">"G"</span>),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Bad"</span>, <span class="st">"Neutral"</span>, <span class="st">"Good"</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">year_fct =</span> <span class="fu">factor</span>(year),</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicle_brand =</span> <span class="fu">fct_lump_n</span>(vehicle_brand, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">other_level =</span> <span class="st">"Other"</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>bonus_score</code> and <code>payment_frequency</code> are treated as ordered factors. <code>vehicle_brand</code> originally has 68 unique values with a long tail; the top 15 are kept and the rest grouped as “Other”.</p>
+</section>
+<section id="creating-profitability-and-volatility-kpis" class="level2">
+<h2 class="anchored" data-anchor-id="creating-profitability-and-volatility-kpis"><strong>3.5 Creating Profitability and Volatility KPIs</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Building analytical KPIs with division-by-zero guards</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>clean <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">loss_ratio =</span> <span class="fu">if_else</span>(total_premium <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                         total_incurred <span class="sc">/</span> total_premium, <span class="cn">NA_real_</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">frequency =</span> <span class="fu">if_else</span>(total_exposure <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                        total_claims <span class="sc">/</span> total_exposure, <span class="cn">NA_real_</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">severity =</span> <span class="fu">if_else</span>(total_claims <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                       total_incurred <span class="sc">/</span> total_claims, <span class="cn">NA_real_</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">pure_premium =</span> <span class="fu">if_else</span>(total_exposure <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                           total_incurred <span class="sc">/</span> total_exposure, <span class="cn">NA_real_</span>),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_claim =</span> total_claims <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Four KPIs are derived:</p>
+<ul>
+<li><code>loss_ratio</code> = incurred ÷ premium — the headline profitability indicator</li>
+<li><code>frequency</code> = claims ÷ exposure — expected number of claims per policy-year</li>
+<li><code>severity</code> = incurred ÷ claims — average cost per claim</li>
+<li><code>pure_premium</code> = incurred ÷ exposure ≈ Frequency × Severity</li>
+</ul>
+</section>
+<section id="creating-age-bands" class="level2">
+<h2 class="anchored" data-anchor-id="creating-age-bands"><strong>3.6 Creating Age Bands</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Binning continuous age variables for grouped plots</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>clean <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">driver_age_band =</span> <span class="fu">cut</span>(driver_age,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">50</span>, <span class="dv">65</span>, <span class="cn">Inf</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt;=25"</span>, <span class="st">"26-35"</span>, <span class="st">"36-50"</span>, <span class="st">"51-65"</span>, <span class="st">"65+"</span>)),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicle_age_band =</span> <span class="fu">cut</span>(vehicle_age,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">20</span>, <span class="cn">Inf</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0-3"</span>, <span class="st">"4-7"</span>, <span class="st">"8-12"</span>, <span class="st">"13-20"</span>, <span class="st">"20+"</span>)),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicle_value_band =</span> <span class="fu">cut</span>(vehicle_value,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">10000</span>, <span class="dv">20000</span>, <span class="dv">35000</span>, <span class="dv">60000</span>, <span class="cn">Inf</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt;10k"</span>, <span class="st">"10-20k"</span>, <span class="st">"20-35k"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"35-60k"</span>, <span class="st">"60k+"</span>))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="sandbox-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sandbox-summary"><strong>3.7 Sandbox Summary</strong></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Quick check of the cleaned dataset</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="fu">c</span>(<span class="st">"Rows"</span>, <span class="st">"Columns"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Median loss ratio"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"99th percentile loss ratio"</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(clean),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ncol</span>(clean),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="fu">median</span>(clean<span class="sc">$</span>loss_ratio, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="fu">quantile</span>(clean<span class="sc">$</span>loss_ratio, <span class="fl">0.99</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  metric                        value
+  &lt;chr&gt;                         &lt;dbl&gt;
+1 Rows                       354091  
+2 Columns                        56  
+3 Median loss ratio               0  
+4 99th percentile loss ratio     12.4</code></pre>
+</div>
+</div>
+<p>The cleaned dataset is ready for the analysis sections below.</p>
+</section>
+</section>
+<section id="univariate-visual-analysis" class="level1">
+<h1><strong>4 Univariate Visual Analysis</strong></h1>
+<p>This section explores the distribution of individual variables before moving to bivariate analysis. Numerical, categorical and temporal variables are examined separately because each calls for a different visualisation approach.</p>
+<section id="numerical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-variables"><strong>4.1 Numerical Variables</strong></h2>
+<section id="driver-age" class="level3">
+<h3 class="anchored" data-anchor-id="driver-age"><strong>4.1.1 Driver Age</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting driver age distribution with a histogram</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> driver_age)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="st">"#7097BB"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Driver Age"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Driver age (years)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Driver age is roughly symmetric and centred around 48 years, ranging from 18 to 90. There is no extreme skew, and the bulk of the portfolio sits between 35 and 65.</p>
+</section>
+<section id="vehicle-age" class="level3">
+<h3 class="anchored" data-anchor-id="vehicle-age"><strong>4.1.2 Vehicle Age</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting vehicle age distribution</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> vehicle_age)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">fill =</span> <span class="st">"#7097BB"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Vehicle Age"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Vehicle age (years)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Vehicle age is also fairly symmetric with a median of 25 years. The portfolio leans towards older vehicles, which is consistent with the typical Spanish private motor market.</p>
+</section>
+<section id="vehicle-value" class="level3">
+<h3 class="anchored" data-anchor-id="vehicle-value"><strong>4.1.3 Vehicle Value</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting vehicle value on a log scale due to heavy right skew</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(vehicle_value)), <span class="fu">aes</span>(<span class="at">x =</span> vehicle_value)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#7097BB"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">big.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Vehicle Value (log scale)"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Vehicle value (€, log scale)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Vehicle value is heavily right-skewed (skewness ≈ 2.2), so a log scale is used to reveal the shape. Most vehicles are valued between €10,000 and €40,000, with a long tail of luxury vehicles extending past €300,000.</p>
+</section>
+<section id="total-premium" class="level3">
+<h3 class="anchored" data-anchor-id="total-premium"><strong>4.1.4 Total Premium</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting total premium distribution on a log scale</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> total_premium)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#7097BB"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">big.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Total Premium (log scale)"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total premium (€, log scale)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Total premium ranges from less than €1 to over €5,000 and is strongly right-skewed. On a log scale the distribution looks roughly bell-shaped, with most policies clustered between €150 and €500.</p>
+</section>
+<section id="total-incurred-claims-with-losses-only" class="level3">
+<h3 class="anchored" data-anchor-id="total-incurred-claims-with-losses-only"><strong>4.1.5 Total Incurred (Claims with losses only)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting incurred losses for policies that actually had claims</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_incurred <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">aes</span>(<span class="at">x =</span> total_incurred)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#D95F02"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">big.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Incurred Losses (Loss-bearing policies only, log scale)"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Incurred amount (€, log scale)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Only 14.3% of policies had any incurred losses. Among those, the distribution is extremely right-skewed even on a log scale, with a small number of catastrophic claims exceeding €100,000. This long tail is the main source of portfolio volatility.</p>
+</section>
+<section id="loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="loss-ratio"><strong>4.1.6 Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting loss ratio for loss-bearing policies, capped at 99th percentile</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(loss_ratio <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(loss_ratio <span class="sc">&lt;=</span> <span class="fu">quantile</span>(loss_ratio, <span class="fl">0.99</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> loss_ratio)) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"#D95F02"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Loss Ratio (Loss-bearing policies, capped at p99)"</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Loss ratio (incurred / premium)"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The dashed line at 1.0 marks the break-even point. Among loss-bearing policies, the median loss ratio is 2.3 — meaning the median loss-bearing policy paid out more than twice its premium. Tail values reach into the tens and hundreds, which strongly affects portfolio profitability.</p>
+</section>
+</section>
+<section id="categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variables"><strong>4.2 Categorical Variables</strong></h2>
+<section id="policy-type" class="level3">
+<h3 class="anchored" data-anchor-id="policy-type"><strong>4.2.1 Policy Type</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting policy type counts</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(policy_type))) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#7097BB"</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat =</span> <span class="st">"count"</span>, <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">comma</span>(<span class="fu">after_stat</span>(count))),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Policies by Policy Type"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Policy type"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The portfolio is dominated by <code>CC</code> (third-party + multiple additional coverages) at 58%, followed by <code>COMP_E</code> (comprehensive with excess). The basic <code>TP</code> (third-party only) is the smallest category, suggesting customers prefer broader coverage.</p>
+</section>
+<section id="bonus-score" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-score"><strong>4.2.2 Bonus Score</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting bonus score with the ordered factor levels preserved</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> bonus_score)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#7097BB"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat =</span> <span class="st">"count"</span>, <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">comma</span>(<span class="fu">after_stat</span>(count))),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Policies by Bonus Score"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Bonus score"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>97% of policyholders carry a “Good” bonus score, reflecting the historical claims discipline of the portfolio. The “Bad” and “Neutral” groups are small but worth monitoring separately in the bivariate section because they may drive disproportionate losses.</p>
+</section>
+<section id="municipality-and-circulation-area" class="level3">
+<h3 class="anchored" data-anchor-id="municipality-and-circulation-area"><strong>4.2.3 Municipality and Circulation Area</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting two categorical variables side by side with patchwork</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> municipality_type)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#7097BB"</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Municipality Type"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(clean, <span class="fu">aes</span>(<span class="at">x =</span> circulation_area)) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#7097BB"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Circulation Area"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The portfolio is geographically tilted towards inland municipalities (65%), with coastal regions making up most of the rest. Urban and rural exposures are more balanced (54% vs 46%).</p>
+</section>
+<section id="vehicle-brand-top-15" class="level3">
+<h3 class="anchored" data-anchor-id="vehicle-brand-top-15"><strong>4.2.4 Vehicle Brand (Top 15)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting vehicle brand with a lollipop chart for cleaner long-tail comparison</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(vehicle_brand) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> <span class="fu">fct_reorder</span>(vehicle_brand, n))) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">xend =</span> n,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> vehicle_brand, <span class="at">yend =</span> vehicle_brand),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#7097BB"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">label_comma</span>()) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Policies by Vehicle Brand (Top 15 + Other)"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of policies"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The top six brands (Renault, Citroen, Peugeot, Volkswagen, Ford, Opel) each account for over 27,000 policies and together cover roughly half of the portfolio. The “Other” category at the bottom collects 53 smaller brands.</p>
+</section>
+<section id="vehicle-brand-composition-treemap" class="level3">
+<h3 class="anchored" data-anchor-id="vehicle-brand-composition-treemap"><strong>4.2.5 Vehicle Brand Composition (Treemap)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting brand share as a treemap to emphasise market structure</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(vehicle_brand) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">area =</span> n, <span class="at">fill =</span> n, <span class="at">label =</span> vehicle_brand)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  treemapify<span class="sc">::</span><span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  treemapify<span class="sc">::</span><span class="fu">geom_treemap_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">place =</span> <span class="st">"centre"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">grow =</span> <span class="cn">FALSE</span>, <span class="at">reflow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#A8C5E0"</span>, <span class="at">high =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vehicle Brand Composition (Treemap)"</span>) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The treemap makes the dominance of European mass-market brands visually obvious. The top tier (Renault, Citroen, Peugeot, Volkswagen) forms a clearly larger block than the premium brands (Audi, Mercedes, BMW).</p>
+</section>
+</section>
+<section id="temporal-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="temporal-patterns"><strong>4.3 Temporal Patterns</strong></h2>
+<section id="portfolio-growth-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-growth-over-time"><strong>4.3.1 Portfolio Growth Over Time</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting number of policies per year</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#7097BB"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">comma</span>(n)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2024</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_comma</span>()) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Policies by Year"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Number of policies"</span>) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The portfolio more than doubled between 2022 and 2024, growing from 67,000 to 168,000 policies. This rapid growth means that any year-over-year change in KPIs needs to be interpreted in light of new business mix shifts.</p>
+</section>
+<section id="new-business-vs-portfolio-by-year" class="level3">
+<h3 class="anchored" data-anchor-id="new-business-vs-portfolio-by-year"><strong>4.3.2 New Business vs Portfolio by Year</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting business type split per year</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(year, business_type) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(year), <span class="at">y =</span> n, <span class="at">fill =</span> business_type)) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"New business"</span> <span class="ot">=</span> <span class="st">"#D95F02"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Portfolio"</span>    <span class="ot">=</span> <span class="st">"#7097BB"</span>)) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Share of New Business vs Portfolio by Year"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Share of policies"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The share of new business is consistently high — around 70% across all three years — confirming that the portfolio is in an aggressive acquisition phase rather than a renewal-driven steady state.</p>
+</section>
+</section>
+</section>
+<section id="bivariate-visual-analysis" class="level1">
+<h1><strong>5 Bivariate Visual Analysis</strong></h1>
+<p>This section examines how candidate drivers relate to the two outcomes of interest: portfolio <strong>profitability</strong> (proxied by Loss Ratio) and <strong>volatility</strong> (proxied by the dispersion of Loss Ratio within a group). Each plot pairs a visual with an embedded statistical test using <code>ggstatsplot</code>, so the visual pattern and its significance can be assessed together.</p>
+<p>Because the sample size is large (≈ 354,000 policies), almost any difference is statistically significant. The interpretation focuses on <strong>effect size</strong> — how big the difference actually is — not just on p-values. To prevent extreme outliers from distorting comparisons, Loss Ratio is <strong>Winsorised at the 99th percentile</strong> for all plots in this section.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Preparing a Winsorised copy of loss ratio for plotting</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>clean <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">loss_ratio_w =</span> <span class="fu">if_else</span>(loss_ratio <span class="sc">&gt;</span> <span class="fu">quantile</span>(loss_ratio, <span class="fl">0.99</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">quantile</span>(loss_ratio, <span class="fl">0.99</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                           loss_ratio)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Drawing a 10% random sample for ggstatsplot to keep rendering time manageable</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Statistical power remains very high (~35,000 obs) and conclusions are unchanged</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>clean_sample <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="drivers-of-profitability" class="level2">
+<h2 class="anchored" data-anchor-id="drivers-of-profitability"><strong>5.1 Drivers of Profitability</strong></h2>
+<section id="bonus-score-and-loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-score-and-loss-ratio"><strong>5.1.1 Bonus Score and Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Comparing loss ratio across bonus score groups with Kruskal-Wallis test</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w)),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bonus_score,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> loss_ratio_w,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Loss ratio (Winsorised at p99)"</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Policyholders with a “Bad” bonus score have a mean Loss Ratio about 30% higher than those with “Good” — 0.56 vs 0.42. The Kruskal-Wallis test confirms the difference is significant, and the pairwise comparisons show that all three groups differ from each other. This validates the bonus-malus system: the historical claims record genuinely predicts future loss experience.</p>
+</section>
+<section id="policy-type-and-loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="policy-type-and-loss-ratio"><strong>5.1.2 Policy Type and Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Comparing loss ratio across policy types</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w)),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> policy_type,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> loss_ratio_w,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Loss ratio (Winsorised at p99)"</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>COMP_N</code> (comprehensive without excess) has a mean Loss Ratio of 0.82 — roughly twice the level of the other policy types. This is the most important business finding so far: the broadest coverage tier is the least profitable. <code>TP</code> and <code>TPG</code> (third-party variants) are the most profitable on average, consistent with their narrower coverage.</p>
+</section>
+<section id="circulation-area-and-loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="circulation-area-and-loss-ratio"><strong>5.1.3 Circulation Area and Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Comparing urban vs rural with Mann-Whitney test</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w)),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> circulation_area,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> loss_ratio_w,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Loss ratio (Winsorised at p99)"</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Urban policies have a mean Loss Ratio of 0.445 versus 0.409 for rural — a small but significant gap. The effect size is modest, suggesting that geography matters less than policy type or bonus score.</p>
+</section>
+<section id="driver-age-and-loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="driver-age-and-loss-ratio"><strong>5.1.4 Driver Age and Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Examining loss ratio across driver age bands</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w), <span class="sc">!</span><span class="fu">is.na</span>(driver_age_band)),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> driver_age_band,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> loss_ratio_w,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Loss ratio (Winsorised at p99)"</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Loss Ratio is highest for the youngest drivers (≤25) and the oldest (65+), forming the classic U-shape known to motor underwriters. The middle-age bands (26–50) are the most profitable.</p>
+</section>
+<section id="fuel-type-and-loss-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="fuel-type-and-loss-ratio"><strong>5.1.5 Fuel Type and Loss Ratio</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Comparing diesel vs gasoline</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w), <span class="sc">!</span><span class="fu">is.na</span>(fuel_type)),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> fuel_type,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> loss_ratio_w,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Loss ratio (Winsorised at p99)"</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The gap between diesel and gasoline policies is statistically significant but very small in magnitude. Fuel type alone is unlikely to be a useful pricing factor.</p>
+</section>
+<section id="bonus-score-and-claim-frequency" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-score-and-claim-frequency"><strong>5.1.6 Bonus Score and Claim Frequency</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Linking bonus score to claim frequency</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(frequency)),</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bonus_score,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> frequency,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Claim frequency (claims / exposure)"</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The frequency gap is larger than the Loss Ratio gap: “Bad” bonus drivers file claims at 0.71 per policy-year versus 0.31 for “Good”. The bonus score therefore mainly captures <strong>frequency</strong> risk, not severity.</p>
+</section>
+</section>
+<section id="drivers-of-volatility" class="level2">
+<h2 class="anchored" data-anchor-id="drivers-of-volatility"><strong>5.2 Drivers of Volatility</strong></h2>
+<p>Volatility is measured here as the <strong>coefficient of variation (CV)</strong> of Loss Ratio within each group — standard deviation divided by mean. A higher CV means more unpredictable losses for that segment, even if the average is not extreme.</p>
+<section id="coefficient-of-variation-by-policy-type" class="level3">
+<h3 class="anchored" data-anchor-id="coefficient-of-variation-by-policy-type"><strong>5.2.1 Coefficient of Variation by Policy Type</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Computing CV of loss ratio by policy type</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cv_policy <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(policy_type) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_lr =</span> <span class="fu">mean</span>(loss_ratio_w),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_lr =</span> <span class="fu">sd</span>(loss_ratio_w),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">cv =</span> sd_lr <span class="sc">/</span> mean_lr,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(cv))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cv_policy, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(policy_type, cv), <span class="at">y =</span> cv)) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#D95F02"</span>) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(cv, <span class="dv">2</span>)), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Loss Ratio Volatility by Policy Type"</span>,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Coefficient of variation (higher = more unpredictable)"</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Coefficient of variation"</span>) <span class="sc">+</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>TP</code> (third-party only) is the most volatile despite having the lowest mean Loss Ratio. This is because the small number of severe third-party liability claims can cause large swings relative to the modest average. <code>COMP_N</code> is the least volatile in relative terms, partly because its mean is already high.</p>
+</section>
+<section id="ridge-plot-of-loss-ratio-by-policy-type" class="level3">
+<h3 class="anchored" data-anchor-id="ridge-plot-of-loss-ratio-by-policy-type"><strong>5.2.2 Ridge Plot of Loss Ratio by Policy Type</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Showing full distribution shapes side by side</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w), loss_ratio_w <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> loss_ratio_w, <span class="at">y =</span> policy_type, <span class="at">fill =</span> policy_type)) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">1.5</span>, <span class="at">rel_min_height =</span> <span class="fl">0.01</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Loss Ratio by Policy Type"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Loss-bearing policies only, Winsorised at p99"</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Loss ratio"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ridges</span>() <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The ridge plot shows that <code>COMP_N</code> not only has the highest mean but also a fatter right tail — meaning extreme losses are more common in this segment. The other policy types have similar shapes but differ in where their tails extend.</p>
+</section>
+<section id="coefficient-of-variation-by-bonus-score" class="level3">
+<h3 class="anchored" data-anchor-id="coefficient-of-variation-by-bonus-score"><strong>5.2.3 Coefficient of Variation by Bonus Score</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#CV of loss ratio by bonus score</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>cv_bonus <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bonus_score) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_lr =</span> <span class="fu">mean</span>(loss_ratio_w),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_lr =</span> <span class="fu">sd</span>(loss_ratio_w),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">cv =</span> sd_lr <span class="sc">/</span> mean_lr,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(cv))</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cv_bonus, <span class="fu">aes</span>(<span class="at">x =</span> bonus_score, <span class="at">y =</span> cv)) <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#D95F02"</span>) <span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(cv, <span class="dv">2</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Loss Ratio Volatility by Bonus Score"</span>,</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Bonus score"</span>, <span class="at">y =</span> <span class="st">"Coefficient of variation"</span>) <span class="sc">+</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The “Good” bonus group has the <strong>highest</strong> relative volatility (CV ≈ 4.0) — even though its mean Loss Ratio is the lowest. This is a subtle but important finding: although Good-bonus policies are profitable on average, when losses do occur they can be relatively large compared to the low average, creating tail risk.</p>
+</section>
+<section id="loss-ratio-band-bonus-score-heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="loss-ratio-band-bonus-score-heatmap"><strong>5.2.4 Loss Ratio Band × Bonus Score (Heatmap)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Cross-tabulating loss ratio bands with bonus score</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lr_band =</span> <span class="fu">case_when</span>(</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>      loss_ratio <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"0"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>      loss_ratio <span class="sc">&lt;=</span> <span class="fl">0.5</span> <span class="sc">~</span> <span class="st">"(0, 0.5]"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>      loss_ratio <span class="sc">&lt;=</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"(0.5, 1]"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>      loss_ratio <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"(1, 2]"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"&gt;2"</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"(0, 0.5]"</span>, <span class="st">"(0.5, 1]"</span>, <span class="st">"(1, 2]"</span>, <span class="st">"&gt;2"</span>))</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bonus_score, lr_band) <span class="sc">%&gt;%</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bonus_score) <span class="sc">%&gt;%</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">share =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lr_band, <span class="at">y =</span> bonus_score, <span class="at">fill =</span> share)) <span class="sc">+</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">percent</span>(share, <span class="at">accuracy =</span> <span class="fl">0.1</span>)), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F0F4F8"</span>, <span class="at">high =</span> <span class="st">"#1F4E79"</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Loss Ratio Band Share by Bonus Score"</span>,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Loss ratio band"</span>, <span class="at">y =</span> <span class="st">"Bonus score"</span>, <span class="at">fill =</span> <span class="st">"Share"</span>) <span class="sc">+</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Reading across each row of the heatmap, “Bad” bonus policyholders are roughly twice as likely as “Good” ones to fall into the loss-making bands (<code>&gt;2</code> and <code>(1, 2]</code>). The bonus score is therefore a strong <strong>directional</strong> signal for both mean Loss Ratio and the share of policies in the tail.</p>
+</section>
+</section>
+<section id="multivariate-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="multivariate-patterns"><strong>5.3 Multivariate Patterns</strong></h2>
+<section id="has-claim-bonus-score-stacked-bar-with-chi-square" class="level3">
+<h3 class="anchored" data-anchor-id="has-claim-bonus-score-stacked-bar-with-chi-square"><strong>5.3.1 Has-Claim × Bonus Score (Stacked Bar with Chi-Square)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Chi-square test between has-claim and bonus score</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbarstats</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> clean_sample,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> has_claim,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> bonus_score,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"percentage"</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.title =</span> <span class="st">"Has claim"</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The chi-square test confirms a strong association between bonus score and the probability of filing a claim. 22% of “Bad” bonus policies had at least one claim, versus 14% for “Good” — a 1.5× ratio. This is the cleanest single dimension separating risky from safe customers.</p>
+</section>
+<section id="loss-ratio-by-driver-age-band-and-bonus-score-faceted" class="level3">
+<h3 class="anchored" data-anchor-id="loss-ratio-by-driver-age-band-and-bonus-score-faceted"><strong>5.3.2 Loss Ratio by Driver Age Band and Bonus Score (Faceted)</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loss ratio across two factors simultaneously</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>clean <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(loss_ratio_w), <span class="sc">!</span><span class="fu">is.na</span>(driver_age_band)) <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(driver_age_band, bonus_score) <span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_lr =</span> <span class="fu">mean</span>(loss_ratio_w), <span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> driver_age_band, <span class="at">y =</span> mean_lr,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">group =</span> bonus_score, <span class="at">color =</span> bonus_score)) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Bad"</span> <span class="ot">=</span> <span class="st">"#D95F02"</span>,</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Neutral"</span> <span class="ot">=</span> <span class="st">"#7097BB"</span>,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Good"</span> <span class="ot">=</span> <span class="st">"#1B9E77"</span>)) <span class="sc">+</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mean Loss Ratio by Driver Age and Bonus Score"</span>,</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Driver age band"</span>, <span class="at">y =</span> <span class="st">"Mean loss ratio"</span>,</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Bonus score"</span>) <span class="sc">+</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The U-shape across driver age holds within every bonus group, but the gap between bonus groups widens at the extremes. Young “Bad” bonus drivers are by far the most loss-making segment, while middle-aged “Good” drivers form the profitable core of the portfolio.</p>
+</section>
+<section id="correlation-heatmap-of-numerical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-heatmap-of-numerical-variables"><strong>5.3.3 Correlation Heatmap of Numerical Variables</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Correlation between numeric variables (Spearman to handle skew)</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>num_vars <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(driver_age, vehicle_age, vehicle_value, power_to_weight_ratio,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>         total_premium, total_incurred, total_claims,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>         total_exposure, loss_ratio_w, frequency) <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(num_vars, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_mat, <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>, <span class="at">lab_size =</span> <span class="dv">3</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#D95F02"</span>, <span class="st">"white"</span>, <span class="st">"#1F4E79"</span>),</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">"Spearman Correlation Heatmap"</span>) <span class="sc">+</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex01_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>total_incurred</code> correlates strongly with <code>total_claims</code> (≈ 0.95), confirming that the number of claims drives total losses more than any individual claim size in this portfolio. Premium and exposure are also strongly linked, as expected. None of the customer characteristics (driver age, vehicle age, vehicle value) shows a strong correlation with Loss Ratio individually — this reinforces the earlier finding that <strong>policy structure</strong> (type, bonus) explains more of the profitability variance than driver demographics.</p>
+</section>
+</section>
+</section>
+<section id="key-takeaways" class="level1">
+<h1><strong>6 Key Takeaways</strong></h1>
+<p>The visual analysis above surfaces several actionable findings about the Spanish motor portfolio:</p>
+<ol type="1">
+<li><p><strong>Policy type is the strongest single driver of profitability.</strong> <code>COMP_N</code> (comprehensive without excess) has a mean Loss Ratio of 0.82, roughly double the other tiers. Repricing or repositioning this product is the most immediate lever for portfolio profitability.</p></li>
+<li><p><strong>The bonus score works as intended, but mainly through frequency.</strong> “Bad” bonus drivers file claims 2.3× more often than “Good” ones, and the chi-square test confirms a highly significant association. Severity differs less across bonus groups than frequency does.</p></li>
+<li><p><strong>Driver age follows the classic U-shape.</strong> Drivers ≤25 and ≥65 are the least profitable bands, and the gap between bonus groups is widest at these age extremes. Young Bad-bonus drivers are the single most loss-making sub-segment.</p></li>
+<li><p><strong>Volatility does not track profitability.</strong> The “Good” bonus group, although the most profitable on average, has the highest coefficient of variation. Likewise, <code>TP</code> policies are profitable on average but the most volatile in relative terms. Profitability and volatility must therefore be managed as distinct dimensions.</p></li>
+<li><p><strong>The portfolio is in an aggressive growth phase.</strong> Policy count grew 2.5× from 2022 to 2024, with new business making up about 70% of policies each year. Any year-over-year trend in headline KPIs needs to be interpreted in light of this changing mix.</p></li>
+</ol>
+</section>
+<section id="business-impacts" class="level1">
+<h1><strong>7 Business Impacts</strong></h1>
+<p>The five insights above translate into concrete actions the underwriting and portfolio management teams can take.</p>
+<section id="pricing-and-product" class="level2">
+<h2 class="anchored" data-anchor-id="pricing-and-product"><strong>7.1 Pricing and Product</strong></h2>
+<p><strong>Re-price or restructure COMP_N.</strong> With a mean Loss Ratio of 0.82 — roughly double the rest of the book — this product is the single largest profitability drain. A 15–20% rate increase, tighter excess structure, or repositioning to a different customer segment should be evaluated. Even a modest improvement here has portfolio-level impact because COMP_N still covers ≈ 16,000 policies.</p>
+<p><strong>Apply differentiated underwriting to the young Bad-bonus segment.</strong> Drivers aged ≤ 25 with a Bad bonus score are the worst sub-segment in the portfolio: they combine the U-shape age peak with the 2.3× higher claim frequency of Bad-bonus drivers. Tighter underwriting rules, mandatory excess, or simply declining the renewal of the most loss-making cohort can reduce tail exposure quickly.</p>
+<p><strong>Re-examine TP pricing.</strong> TP policies look profitable on average (mean LR ≈ 0.31) but have the highest coefficient of variation (5.19). This means the segment is exposed to severe third-party liability claims that the current premium may not adequately reflect. Reinsurance arrangements and excess-of-loss structures should be reviewed.</p>
+</section>
+<section id="portfolio-management-and-reporting" class="level2">
+<h2 class="anchored" data-anchor-id="portfolio-management-and-reporting"><strong>7.2 Portfolio Management and Reporting</strong></h2>
+<p><strong>Track profitability and volatility as two separate KPIs.</strong> The analysis shows clearly that the most profitable segments are not always the most stable: Good-bonus drivers have the lowest mean LR but the highest CV; TP has the lowest mean LR but the highest CV. Management reporting that monitors only mean Loss Ratio will miss tail-risk build-up.</p>
+<p><strong>Interpret year-over-year trends with new-business mix in mind.</strong> Because ≈ 70% of policies each year are new business and the book grew 2.5× in three years, headline KPI movements are confounded by the changing mix. Mix-adjusted KPIs (e.g.&nbsp;Loss Ratio computed only on renewal policies, or stratified by year cohort) give a cleaner view of underlying performance.</p>
+<p><strong>Concentrate monitoring on the segments identified.</strong> Rather than tracking dozens of metrics across all dimensions, the underwriting committee can focus on five risk cells: (i) COMP_N policies overall, (ii) drivers ≤ 25 with Bad bonus, (iii) drivers ≥ 65 across all bonus levels, (iv) TP policies, and (v) policies with Loss Ratio &gt; 2 in the prior year. These five cells capture most of the portfolio’s downside.</p>
+</section>
+<section id="expected-financial-impact" class="level2">
+<h2 class="anchored" data-anchor-id="expected-financial-impact"><strong>7.3 Expected Financial Impact</strong></h2>
+<p>If COMP_N alone were re-priced to reach a mean Loss Ratio of 0.55 (the portfolio average), the improvement would lift overall portfolio profitability by roughly <strong>1.5 to 2.0 percentage points of Loss Ratio</strong>, equivalent to several million euros in annual underwriting result given the portfolio size. Combined with the young Bad-bonus underwriting tightening, total improvement could reach 3 percentage points without a single new product launch — making these the highest-ROI actions available to the underwriting team.</p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1><strong>8 References</strong></h1>
+<section id="data-source" class="level2">
+<h2 class="anchored" data-anchor-id="data-source"><strong>8.1 Data Source</strong></h2>
+<p>García-Pérez, A. (2024). <em>Dataset of motor insurance portfolio</em>. Mendeley Data, V1. <a href="https://data.mendeley.com/datasets/sw4jmdb2sm/1" class="uri">https://data.mendeley.com/datasets/sw4jmdb2sm/1</a></p>
+</section>
+<section id="r-packages-used" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages-used"><strong>8.2 R Packages Used</strong></h2>
+<ul>
+<li>Wickham, H. et al.&nbsp;(2019). Welcome to the tidyverse. <em>Journal of Open Source Software</em>, 4(43), 1686. <a href="https://www.tidyverse.org" class="uri">https://www.tidyverse.org</a></li>
+<li>Patil, I. (2021). Visualizations with statistical details: The <code>ggstatsplot</code> approach. <em>Journal of Open Source Software</em>, 6(61), 3167. <a href="https://indrajeetpatil.github.io/ggstatsplot/" class="uri">https://indrajeetpatil.github.io/ggstatsplot/</a></li>
+<li>Wilke, C. O. (2024). <code>ggridges</code>: Ridgeline plots in <code>ggplot2</code>. <a href="https://wilkelab.org/ggridges/" class="uri">https://wilkelab.org/ggridges/</a></li>
+<li>Kay, M. (2024). <code>ggdist</code>: Visualizations of distributions and uncertainty. <a href="https://mjskay.github.io/ggdist/" class="uri">https://mjskay.github.io/ggdist/</a></li>
+<li>Kassambara, A. (2023). <code>ggcorrplot</code>: Visualization of a correlation matrix using <code>ggplot2</code>. <a href="https://rpkgs.datanovia.com/ggcorrplot/" class="uri">https://rpkgs.datanovia.com/ggcorrplot/</a></li>
+<li>Wilkins, D. (2023). <code>treemapify</code>: Draw treemaps in <code>ggplot2</code>. <a href="https://wilkox.org/treemapify/" class="uri">https://wilkox.org/treemapify/</a></li>
+<li>Pedersen, T. L. (2024). <code>patchwork</code>: The composer of plots. <a href="https://patchwork.data-imaginist.com/" class="uri">https://patchwork.data-imaginist.com/</a></li>
+</ul>
+</section>
+<section id="methodology-references" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-references"><strong>8.3 Methodology References</strong></h2>
+<ul>
+<li>Kam, T. S. (2024). <em>R for Visual Analytics — Course materials for ISSS608</em>. Singapore Management University.</li>
+<li>Werner, G. &amp; Modlin, C. (2016). <em>Basic Ratemaking</em> (5th ed.). Casualty Actuarial Society.</li>
+<li>Tukey, J. W. (1977). <em>Exploratory Data Analysis</em>. Addison-Wesley.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
