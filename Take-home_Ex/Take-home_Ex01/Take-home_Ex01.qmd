@@ -1,7 +1,7 @@
 ---
 title: "Take-home_Ex01"
 author: "Meng Xinyu"
-date-modified: "last-modified"
+date-modified: last-modified
 execute:
   warning: false
   freeze: auto
@@ -13,15 +13,20 @@ This take-home exercise applies visual analytics to a real Spanish motor insuran
 
 ## **Executive Summary**
 
-The following slide deck condenses the five key insights and recommended business actions. Use the arrow keys or click the navigation arrows on the slide to flip through. The full technical walkthrough — data preparation, methodology and complete bivariate analysis — follows below.
+The following slide deck condenses the five key insights and recommended business actions into 13 slides. Use the arrow keys, click the navigation arrows on the slide, or press `F` for full screen. The full technical walkthrough — data preparation, methodology and complete bivariate analysis — follows below.
 
+::: {style="position: relative; width: 100%; padding-bottom: 60%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin: 1.5em 0; border: 1px solid #D8CFC0;"}
 ```{=html}
 <iframe class="slide-deck" src="Take-home_Ex01_slides.html" 
-        width="100%" height="600px"
-        style="border: 1px solid #D8CFC0; border-radius: 8px; 
-               box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin: 1em 0;">
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+        allowfullscreen>
 </iframe>
 ```
+:::
+
+::: {style="text-align: right; font-size: 0.85em; color: #888; margin-top: -0.5em; margin-bottom: 2em;"}
+[Open slides in a new tab ↗](Take-home_Ex01_slides.html){target="_blank"}
+:::
 
 [**↗ Open the presentation in full screen**](Take-home_Ex01_slides.html){target="_blank"}
 
@@ -175,13 +180,85 @@ tibble(
 
 The cleaned dataset is ready for the analysis sections below.
 
-# **4 Univariate Visual Analysis**
+# **4 Methodology**
+
+This section explains the visual analytics techniques chosen for this analysis and why each was selected. The principle followed throughout is **fit the visual to the data**: distribution shape, variable type, and the question being asked all dictate which graphic is most informative.
+
+## **4.1 Choice of Visual Techniques**
+
+```{r}
+#Tabulating the technique-to-data-type mapping
+tibble(
+  `Data type or question` = c(
+    "Numerical variable, roughly symmetric (driver age, vehicle age)",
+    "Numerical variable, heavily right-skewed (premium, incurred, vehicle value)",
+    "Loss Ratio with strong zero-inflation (~88% of policies)",
+    "Categorical variable with few levels (policy type, bonus score)",
+    "Categorical variable with many levels & long tail (vehicle brand)",
+    "Time evolution (year-by-year)",
+    "Two-group mean comparison",
+    "Three or more group comparison",
+    "Group comparison plus full distribution shape",
+    "Two categorical variables (e.g. bonus × claim)",
+    "Correlations among many numerical variables",
+    "Within-group volatility comparison",
+    "Joint distribution of profitability bands and bonus"
+  ),
+  `Technique chosen` = c(
+    "Histogram with linear scale",
+    "Histogram with log10 scale",
+    "Filtered histogram (loss-bearing only) + dashed break-even line",
+    "Bar chart with explicit count labels",
+    "Lollipop + treemap (collapsed top-15 + Other)",
+    "Column chart and stacked share chart",
+    "ggbetweenstats with Mann-Whitney test",
+    "ggbetweenstats with Kruskal-Wallis + pairwise comparisons",
+    "Ridge plot (geom_density_ridges)",
+    "ggbarstats with embedded chi-square test",
+    "Spearman correlation heatmap (ggcorrplot)",
+    "Coefficient of variation bar chart",
+    "Heatmap with row-normalised shares"
+  ),
+  `Why this technique` = c(
+    "Linear scale reveals the centre and spread when the distribution is well-behaved.",
+    "Log scale is the only way to see the shape; on a linear axis the bulk of the data is compressed into one bar.",
+    "Mixing the zero pile-up with positive losses on the same histogram hides the shape of either; the break-even line orients the reader on profitability.",
+    "Direct, unambiguous, and counts can be read off the chart.",
+    "A normal bar chart would have 60+ thin bars; lollipop emphasises rank, treemap reveals market structure.",
+    "Column chart shows absolute growth; stacked share reveals mix changes that absolute counts hide.",
+    "Non-parametric test is robust to the heavily skewed Loss Ratio distribution; embedded p-value avoids a separate test table.",
+    "Kruskal-Wallis is the non-parametric ANOVA; pairwise comparisons identify which specific groups differ.",
+    "Box plots collapse distribution shape into 5 numbers; ridges show whether two groups differ by mean, by tail thickness, or both.",
+    "Chi-square is the right test for two categoricals; ggbarstats embeds the test result directly in the plot.",
+    "Spearman is rank-based and therefore robust to the skewed distributions found throughout this dataset.",
+    "CV (sd ÷ mean) is the standard insurance industry measure of relative dispersion; suitable for comparing groups with very different mean Loss Ratios.",
+    "Row-normalised shares allow direct comparison across bonus groups even when their sizes are very different (Good is 97% of the book)."
+  )
+) %>%
+  kable()
+```
+
+## **4.2 Statistical Validation Strategy**
+
+Because the sample size is large (≈ 354,000 policies), conventional p-value cutoffs lose their discriminating power — almost every difference is "significant". Three deliberate adjustments are therefore applied throughout the bivariate analysis:
+
+1.  **Non-parametric tests by default.** Loss Ratio is heavily right-skewed and zero-inflated, violating the normality assumption behind ANOVA and Pearson correlation. Kruskal-Wallis, Mann-Whitney and Spearman are used instead.
+
+2.  **Effect size, not just p-value.** Each interpretation paragraph reports the actual magnitude of the difference (e.g. "0.82 vs 0.41") rather than relying on significance alone.
+
+3.  **Winsorisation at the 99th percentile.** Extreme Loss Ratio values (the maximum is 11,349) would distort group means and plot scales. Winsorising at the 99th percentile preserves all observations while preventing tail outliers from dominating visual and statistical comparisons.
+
+## **4.3 Why ggstatsplot**
+
+Most bivariate plots in this report use `ggstatsplot` instead of plain `ggplot2`. The reason is that this package **embeds the statistical test result inside the plot itself** — sample size, test statistic, p-value, effect size, and pairwise comparisons all appear in the figure caption automatically. This satisfies the assignment's requirement for "statistically validated" findings without forcing readers to flip between charts and a separate results table.
+
+# **5 Univariate Visual Analysis**
 
 This section explores the distribution of individual variables before moving to bivariate analysis. Numerical, categorical and temporal variables are examined separately because each calls for a different visualisation approach.
 
-## **4.1 Numerical Variables**
+## **5.1 Numerical Variables**
 
-### **4.1.1 Driver Age**
+### **5.1.1 Driver Age**
 
 ```{r}
 #Plotting driver age distribution with a histogram
@@ -194,7 +271,7 @@ ggplot(clean, aes(x = driver_age)) +
 
 Driver age is roughly symmetric and centred around 48 years, ranging from 18 to 90. There is no extreme skew, and the bulk of the portfolio sits between 35 and 65.
 
-### **4.1.2 Vehicle Age**
+### **5.1.2 Vehicle Age**
 
 ```{r}
 #Plotting vehicle age distribution
@@ -207,7 +284,7 @@ ggplot(clean, aes(x = vehicle_age)) +
 
 Vehicle age is also fairly symmetric with a median of 25 years. The portfolio leans towards older vehicles, which is consistent with the typical Spanish private motor market.
 
-### **4.1.3 Vehicle Value**
+### **5.1.3 Vehicle Value**
 
 ```{r}
 #Plotting vehicle value on a log scale due to heavy right skew
@@ -221,7 +298,7 @@ ggplot(clean %>% filter(!is.na(vehicle_value)), aes(x = vehicle_value)) +
 
 Vehicle value is heavily right-skewed (skewness ≈ 2.2), so a log scale is used to reveal the shape. Most vehicles are valued between €10,000 and €40,000, with a long tail of luxury vehicles extending past €300,000.
 
-### **4.1.4 Total Premium**
+### **5.1.4 Total Premium**
 
 ```{r}
 #Plotting total premium distribution on a log scale
@@ -235,7 +312,7 @@ ggplot(clean, aes(x = total_premium)) +
 
 Total premium ranges from less than €1 to over €5,000 and is strongly right-skewed. On a log scale the distribution looks roughly bell-shaped, with most policies clustered between €150 and €500.
 
-### **4.1.5 Total Incurred (Claims with losses only)**
+### **5.1.5 Total Incurred (Claims with losses only)**
 
 ```{r}
 #Plotting incurred losses for policies that actually had claims
@@ -249,7 +326,7 @@ ggplot(clean %>% filter(total_incurred > 0), aes(x = total_incurred)) +
 
 Only 14.3% of policies had any incurred losses. Among those, the distribution is extremely right-skewed even on a log scale, with a small number of catastrophic claims exceeding €100,000. This long tail is the main source of portfolio volatility.
 
-### **4.1.6 Loss Ratio**
+### **5.1.6 Loss Ratio**
 
 ```{r}
 #Plotting loss ratio for loss-bearing policies, capped at 99th percentile
@@ -266,9 +343,9 @@ clean %>%
 
 The dashed line at 1.0 marks the break-even point. Among loss-bearing policies, the median loss ratio is 2.3 — meaning the median loss-bearing policy paid out more than twice its premium. Tail values reach into the tens and hundreds, which strongly affects portfolio profitability.
 
-## **4.2 Categorical Variables**
+## **5.2 Categorical Variables**
 
-### **4.2.1 Policy Type**
+### **5.2.1 Policy Type**
 
 ```{r}
 #Plotting policy type counts
@@ -283,7 +360,7 @@ ggplot(clean, aes(x = fct_infreq(policy_type))) +
 
 The portfolio is dominated by `CC` (third-party + multiple additional coverages) at 58%, followed by `COMP_E` (comprehensive with excess). The basic `TP` (third-party only) is the smallest category, suggesting customers prefer broader coverage.
 
-### **4.2.2 Bonus Score**
+### **5.2.2 Bonus Score**
 
 ```{r}
 #Plotting bonus score with the ordered factor levels preserved
@@ -298,7 +375,7 @@ ggplot(clean, aes(x = bonus_score)) +
 
 97% of policyholders carry a "Good" bonus score, reflecting the historical claims discipline of the portfolio. The "Bad" and "Neutral" groups are small but worth monitoring separately in the bivariate section because they may drive disproportionate losses.
 
-### **4.2.3 Municipality and Circulation Area**
+### **5.2.3 Municipality and Circulation Area**
 
 ```{r}
 #Plotting two categorical variables side by side with patchwork
@@ -317,7 +394,7 @@ p1 + p2
 
 The portfolio is geographically tilted towards inland municipalities (65%), with coastal regions making up most of the rest. Urban and rural exposures are more balanced (54% vs 46%).
 
-### **4.2.4 Vehicle Brand (Top 15)**
+### **5.2.4 Vehicle Brand (Top 15)**
 
 ```{r}
 #Plotting vehicle brand with a lollipop chart for cleaner long-tail comparison
@@ -336,7 +413,7 @@ clean %>%
 
 The top six brands (Renault, Citroen, Peugeot, Volkswagen, Ford, Opel) each account for over 27,000 policies and together cover roughly half of the portfolio. The "Other" category at the bottom collects 53 smaller brands.
 
-### **4.2.5 Vehicle Brand Composition (Treemap)**
+### **5.2.5 Vehicle Brand Composition (Treemap)**
 
 ```{r}
 #Plotting brand share as a treemap to emphasise market structure
@@ -353,9 +430,9 @@ clean %>%
 
 The treemap makes the dominance of European mass-market brands visually obvious. The top tier (Renault, Citroen, Peugeot, Volkswagen) forms a clearly larger block than the premium brands (Audi, Mercedes, BMW).
 
-## **4.3 Temporal Patterns**
+## **5.3 Temporal Patterns**
 
-### **4.3.1 Portfolio Growth Over Time**
+### **5.3.1 Portfolio Growth Over Time**
 
 ```{r}
 #Plotting number of policies per year
@@ -373,7 +450,7 @@ clean %>%
 
 The portfolio more than doubled between 2022 and 2024, growing from 67,000 to 168,000 policies. This rapid growth means that any year-over-year change in KPIs needs to be interpreted in light of new business mix shifts.
 
-### **4.3.2 New Business vs Portfolio by Year**
+### **5.3.2 New Business vs Portfolio by Year**
 
 ```{r}
 #Plotting business type split per year
@@ -391,7 +468,7 @@ clean %>%
 
 The share of new business is consistently high — around 70% across all three years — confirming that the portfolio is in an aggressive acquisition phase rather than a renewal-driven steady state.
 
-# **5 Bivariate Visual Analysis**
+# **6 Bivariate Visual Analysis**
 
 This section examines how candidate drivers relate to the two outcomes of interest: portfolio **profitability** (proxied by Loss Ratio) and **volatility** (proxied by the dispersion of Loss Ratio within a group). Each plot pairs a visual with an embedded statistical test using `ggstatsplot`, so the visual pattern and its significance can be assessed together.
 
@@ -412,9 +489,9 @@ set.seed(123)
 clean_sample <- clean %>% slice_sample(prop = 0.1)
 ```
 
-## **5.1 Drivers of Profitability**
+## **6.1 Drivers of Profitability**
 
-### **5.1.1 Bonus Score and Loss Ratio**
+### **6.1.1 Bonus Score and Loss Ratio**
 
 ```{r}
 #Comparing loss ratio across bonus score groups with Kruskal-Wallis test
@@ -431,7 +508,7 @@ ggbetweenstats(
 
 Policyholders with a "Bad" bonus score have a mean Loss Ratio about 30% higher than those with "Good" — 0.56 vs 0.42. The Kruskal-Wallis test confirms the difference is significant, and the pairwise comparisons show that all three groups differ from each other. This validates the bonus-malus system: the historical claims record genuinely predicts future loss experience.
 
-### **5.1.2 Policy Type and Loss Ratio**
+### **6.1.2 Policy Type and Loss Ratio**
 
 ```{r}
 #Comparing loss ratio across policy types
@@ -448,7 +525,7 @@ ggbetweenstats(
 
 `COMP_N` (comprehensive without excess) has a mean Loss Ratio of 0.82 — roughly twice the level of the other policy types. This is the most important business finding so far: the broadest coverage tier is the least profitable. `TP` and `TPG` (third-party variants) are the most profitable on average, consistent with their narrower coverage.
 
-### **5.1.3 Circulation Area and Loss Ratio**
+### **6.1.3 Circulation Area and Loss Ratio**
 
 ```{r}
 #Comparing urban vs rural with Mann-Whitney test
@@ -463,7 +540,7 @@ ggbetweenstats(
 
 Urban policies have a mean Loss Ratio of 0.445 versus 0.409 for rural — a small but significant gap. The effect size is modest, suggesting that geography matters less than policy type or bonus score.
 
-### **5.1.4 Driver Age and Loss Ratio**
+### **6.1.4 Driver Age and Loss Ratio**
 
 ```{r}
 #Examining loss ratio across driver age bands
@@ -480,7 +557,7 @@ ggbetweenstats(
 
 Loss Ratio is highest for the youngest drivers (≤25) and the oldest (65+), forming the classic U-shape known to motor underwriters. The middle-age bands (26–50) are the most profitable.
 
-### **5.1.5 Fuel Type and Loss Ratio**
+### **6.1.5 Fuel Type and Loss Ratio**
 
 ```{r}
 #Comparing diesel vs gasoline
@@ -495,7 +572,7 @@ ggbetweenstats(
 
 The gap between diesel and gasoline policies is statistically significant but very small in magnitude. Fuel type alone is unlikely to be a useful pricing factor.
 
-### **5.1.6 Bonus Score and Claim Frequency**
+### **6.1.6 Bonus Score and Claim Frequency**
 
 ```{r}
 #Linking bonus score to claim frequency
@@ -512,11 +589,11 @@ ggbetweenstats(
 
 The frequency gap is larger than the Loss Ratio gap: "Bad" bonus drivers file claims at 0.71 per policy-year versus 0.31 for "Good". The bonus score therefore mainly captures **frequency** risk, not severity.
 
-## **5.2 Drivers of Volatility**
+## **6.2 Drivers of Volatility**
 
 Volatility is measured here as the **coefficient of variation (CV)** of Loss Ratio within each group — standard deviation divided by mean. A higher CV means more unpredictable losses for that segment, even if the average is not extreme.
 
-### **5.2.1 Coefficient of Variation by Policy Type**
+### **6.2.1 Coefficient of Variation by Policy Type**
 
 ```{r}
 #Computing CV of loss ratio by policy type
@@ -541,7 +618,7 @@ ggplot(cv_policy, aes(x = fct_reorder(policy_type, cv), y = cv)) +
 
 `TP` (third-party only) is the most volatile despite having the lowest mean Loss Ratio. This is because the small number of severe third-party liability claims can cause large swings relative to the modest average. `COMP_N` is the least volatile in relative terms, partly because its mean is already high.
 
-### **5.2.2 Ridge Plot of Loss Ratio by Policy Type**
+### **6.2.2 Ridge Plot of Loss Ratio by Policy Type**
 
 ```{r}
 #Showing full distribution shapes side by side
@@ -559,7 +636,7 @@ clean %>%
 
 The ridge plot shows that `COMP_N` not only has the highest mean but also a fatter right tail — meaning extreme losses are more common in this segment. The other policy types have similar shapes but differ in where their tails extend.
 
-### **5.2.3 Coefficient of Variation by Bonus Score**
+### **6.2.3 Coefficient of Variation by Bonus Score**
 
 ```{r}
 #CV of loss ratio by bonus score
@@ -582,7 +659,7 @@ ggplot(cv_bonus, aes(x = bonus_score, y = cv)) +
 
 The "Good" bonus group has the **highest** relative volatility (CV ≈ 4.0) — even though its mean Loss Ratio is the lowest. This is a subtle but important finding: although Good-bonus policies are profitable on average, when losses do occur they can be relatively large compared to the low average, creating tail risk.
 
-### **5.2.4 Loss Ratio Band × Bonus Score (Heatmap)**
+### **6.2.4 Loss Ratio Band × Bonus Score (Heatmap)**
 
 ```{r}
 #Cross-tabulating loss ratio bands with bonus score
@@ -612,9 +689,9 @@ clean %>%
 
 Reading across each row of the heatmap, "Bad" bonus policyholders are roughly twice as likely as "Good" ones to fall into the loss-making bands (`>2` and `(1, 2]`). The bonus score is therefore a strong **directional** signal for both mean Loss Ratio and the share of policies in the tail.
 
-## **5.3 Multivariate Patterns**
+## **6.3 Multivariate Patterns**
 
-### **5.3.1 Has-Claim × Bonus Score (Stacked Bar with Chi-Square)**
+### **6.3.1 Has-Claim × Bonus Score (Stacked Bar with Chi-Square)**
 
 ```{r}
 #Chi-square test between has-claim and bonus score
@@ -629,7 +706,7 @@ ggbarstats(
 
 The chi-square test confirms a strong association between bonus score and the probability of filing a claim. 22% of "Bad" bonus policies had at least one claim, versus 14% for "Good" — a 1.5× ratio. This is the cleanest single dimension separating risky from safe customers.
 
-### **5.3.2 Loss Ratio by Driver Age Band and Bonus Score (Faceted)**
+### **6.3.2 Loss Ratio by Driver Age Band and Bonus Score (Faceted)**
 
 ```{r}
 #Loss ratio across two factors simultaneously
@@ -652,7 +729,7 @@ clean %>%
 
 The U-shape across driver age holds within every bonus group, but the gap between bonus groups widens at the extremes. Young "Bad" bonus drivers are by far the most loss-making segment, while middle-aged "Good" drivers form the profitable core of the portfolio.
 
-### **5.3.3 Correlation Heatmap of Numerical Variables**
+### **6.3.3 Correlation Heatmap of Numerical Variables**
 
 ```{r}
 #Correlation between numeric variables (Spearman to handle skew)
@@ -672,7 +749,108 @@ ggcorrplot(cor_mat, type = "lower", lab = TRUE, lab_size = 3,
 
 `total_incurred` correlates strongly with `total_claims` (≈ 0.95), confirming that the number of claims drives total losses more than any individual claim size in this portfolio. Premium and exposure are also strongly linked, as expected. None of the customer characteristics (driver age, vehicle age, vehicle value) shows a strong correlation with Loss Ratio individually — this reinforces the earlier finding that **policy structure** (type, bonus) explains more of the profitability variance than driver demographics.
 
-# **6 Key Takeaways**
+## **6.4 Temporal Dynamics of Profitability**
+
+The univariate temporal analysis in section 5.3 showed that the portfolio is growing rapidly. The question now is whether this growth is profitable. The four plots below track how Loss Ratio and frequency evolve across the three-year window, segmented by the risk factors identified above.
+
+### **6.4.1 Overall Loss Ratio Trend**
+
+```{r}
+#Mean loss ratio by year — does the book get better or worse over time?
+clean %>%
+  filter(!is.na(loss_ratio_w)) %>%
+  group_by(year) %>%
+  summarise(mean_lr = mean(loss_ratio_w)) %>%
+  ggplot(aes(x = year, y = mean_lr)) +
+  geom_col(fill = "#D95F02", width = 0.6) +
+  geom_text(aes(label = round(mean_lr, 3)),
+            vjust = -0.3, size = 4.5) +
+  scale_x_continuous(breaks = 2022:2024) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Mean Loss Ratio by Year",
+       x = NULL, y = "Mean loss ratio (Winsorised at p99)") +
+  theme_minimal()
+```
+
+The mean Loss Ratio has risen consistently from 0.38 in 2022 to 0.46 in 2024 — a **22% relative increase in just two years**. This is a material deterioration that warrants immediate attention.
+
+### **6.4.2 Loss Ratio Trend by Policy Type**
+
+```{r}
+#Drilling into the deterioration by policy type
+clean %>%
+  filter(!is.na(loss_ratio_w)) %>%
+  group_by(year, policy_type) %>%
+  summarise(mean_lr = mean(loss_ratio_w), .groups = "drop") %>%
+  ggplot(aes(x = year, y = mean_lr,
+             group = policy_type, color = policy_type)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "grey50") +
+  scale_x_continuous(breaks = 2022:2024) +
+  scale_color_brewer(palette = "Set2") +
+  labs(title = "Mean Loss Ratio Trend by Policy Type",
+       subtitle = "Dashed line = break-even (LR = 1)",
+       x = NULL, y = "Mean loss ratio", color = "Policy type") +
+  theme_minimal()
+```
+
+The headline number conceals a much sharper story at the product level. **COMP_N has crossed the break-even line in 2024**, with a mean Loss Ratio of 1.01 — every euro of premium collected on this product is now being paid out in claims, before any expense allocation. TP doubled from 0.17 to 0.36 over the same period. CC and TPG are the most stable, with smaller upward drifts.
+
+### **6.4.3 Claim Frequency Trend by Bonus Score**
+
+```{r}
+#Is the bonus signal still working over time?
+clean %>%
+  filter(!is.na(frequency)) %>%
+  group_by(year, bonus_score) %>%
+  summarise(mean_freq = mean(frequency), .groups = "drop") %>%
+  ggplot(aes(x = year, y = mean_freq,
+             group = bonus_score, color = bonus_score)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  scale_x_continuous(breaks = 2022:2024) +
+  scale_color_manual(values = c("Bad"     = "#D95F02",
+                                "Neutral" = "#7097BB",
+                                "Good"    = "#1B9E77")) +
+  labs(title = "Claim Frequency Trend by Bonus Score",
+       x = NULL, y = "Claims per policy-year", color = "Bonus") +
+  theme_minimal()
+```
+
+The "Good" bonus group has stayed steady — its frequency barely moves from year to year. "Bad" bonus fluctuates more (sample is small, \~1,000 policies). The most concerning trend is **Neutral**: its frequency has risen from 0.45 to 0.62 between 2022 and 2024 — suggesting that some previously "average" customers are drifting toward the high-risk pool.
+
+### **6.4.4 New Business vs Renewal Profitability**
+
+```{r}
+#Are new policies or renewals driving the deterioration?
+clean %>%
+  filter(!is.na(loss_ratio_w)) %>%
+  group_by(year, business_type) %>%
+  summarise(mean_lr = mean(loss_ratio_w), .groups = "drop") %>%
+  ggplot(aes(x = year, y = mean_lr,
+             group = business_type, fill = business_type)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6) +
+  geom_text(aes(label = round(mean_lr, 3)),
+            position = position_dodge(width = 0.7),
+            vjust = -0.3, size = 3.8) +
+  scale_x_continuous(breaks = 2022:2024) +
+  scale_fill_manual(values = c("New business" = "#7097BB",
+                               "Portfolio"    = "#D95F02")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(title = "Loss Ratio: New Business vs Renewal",
+       x = NULL, y = "Mean loss ratio", fill = NULL) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+Renewal policies (Portfolio) consistently underperform new business by 5–8 percentage points of Loss Ratio, and the gap is widening: in 2024, renewals hit a mean Loss Ratio of **0.51 vs 0.42 for new business**. This is counter-intuitive — renewals should embody the company's selective underwriting from prior years — and points to **adverse selection in retention**: the better customers shop around at renewal time, while the riskier customers stay.
+
+### **6.4.5 Synthesis**
+
+Three independent signals — overall Loss Ratio drift, COMP_N crossing break-even, and renewal underperformance — all point to the same conclusion: **the portfolio's risk profile is deteriorating faster than the underwriting team is responding**. This adds urgency to the business impact actions in section 8.
+
+# **7 Key Takeaways**
 
 The visual analysis above surfaces several actionable findings about the Spanish motor portfolio:
 
@@ -686,11 +864,13 @@ The visual analysis above surfaces several actionable findings about the Spanish
 
 5.  **The portfolio is in an aggressive growth phase.** Policy count grew 2.5× from 2022 to 2024, with new business making up about 70% of policies each year. Any year-over-year trend in headline KPIs needs to be interpreted in light of this changing mix.
 
-# **7 Business Impacts**
+6.  **Profitability is deteriorating year-on-year — and faster in the worst segments.** Overall Loss Ratio has risen 22% in two years (0.38 → 0.46). COMP_N has crossed the break-even line in 2024 (LR = 1.01), and renewal policies underperform new business by 8 percentage points — a signal of adverse selection in retention.
+
+# **8 Business Impacts**
 
 The five insights above translate into concrete actions the underwriting and portfolio management teams can take.
 
-## **7.1 Pricing and Product**
+## **8.1 Pricing and Product**
 
 **Re-price or restructure COMP_N.** With a mean Loss Ratio of 0.82 — roughly double the rest of the book — this product is the single largest profitability drain. A 15–20% rate increase, tighter excess structure, or repositioning to a different customer segment should be evaluated. Even a modest improvement here has portfolio-level impact because COMP_N still covers ≈ 16,000 policies.
 
@@ -698,7 +878,9 @@ The five insights above translate into concrete actions the underwriting and por
 
 **Re-examine TP pricing.** TP policies look profitable on average (mean LR ≈ 0.31) but have the highest coefficient of variation (5.19). This means the segment is exposed to severe third-party liability claims that the current premium may not adequately reflect. Reinsurance arrangements and excess-of-loss structures should be reviewed.
 
-## **7.2 Portfolio Management and Reporting**
+**Address renewal adverse selection.** The temporal analysis in section 6.4 shows that renewal policies have a mean Loss Ratio 8 percentage points higher than new business in 2024, and the gap is widening. This suggests the company is retaining a disproportionate share of its worst risks while losing better ones to competitors. Retention strategies should be **risk-segmented** — protect the good renewals with discounts or service perks, and let the worst ones lapse rather than offering across-the-board renewal discounts.
+
+## **8.2 Portfolio Management and Reporting**
 
 **Track profitability and volatility as two separate KPIs.** The analysis shows clearly that the most profitable segments are not always the most stable: Good-bonus drivers have the lowest mean LR but the highest CV; TP has the lowest mean LR but the highest CV. Management reporting that monitors only mean Loss Ratio will miss tail-risk build-up.
 
@@ -706,17 +888,17 @@ The five insights above translate into concrete actions the underwriting and por
 
 **Concentrate monitoring on the segments identified.** Rather than tracking dozens of metrics across all dimensions, the underwriting committee can focus on five risk cells: (i) COMP_N policies overall, (ii) drivers ≤ 25 with Bad bonus, (iii) drivers ≥ 65 across all bonus levels, (iv) TP policies, and (v) policies with Loss Ratio \> 2 in the prior year. These five cells capture most of the portfolio's downside.
 
-## **7.3 Expected Financial Impact**
+## **8.3 Expected Financial Impact**
 
 If COMP_N alone were re-priced to reach a mean Loss Ratio of 0.55 (the portfolio average), the improvement would lift overall portfolio profitability by roughly **1.5 to 2.0 percentage points of Loss Ratio**, equivalent to several million euros in annual underwriting result given the portfolio size. Combined with the young Bad-bonus underwriting tightening, total improvement could reach 3 percentage points without a single new product launch — making these the highest-ROI actions available to the underwriting team.
 
-# **8 References**
+# **9 References**
 
-## **8.1 Data Source**
+## **9.1 Data Source**
 
 García-Pérez, A. (2024). *Dataset of motor insurance portfolio*. Mendeley Data, V1. <https://data.mendeley.com/datasets/sw4jmdb2sm/1>
 
-## **8.2 R Packages Used**
+## **9.2 R Packages Used**
 
 -   Wickham, H. et al. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686. <https://www.tidyverse.org>
 -   Patil, I. (2021). Visualizations with statistical details: The `ggstatsplot` approach. *Journal of Open Source Software*, 6(61), 3167. <https://indrajeetpatil.github.io/ggstatsplot/>
@@ -726,7 +908,7 @@ García-Pérez, A. (2024). *Dataset of motor insurance portfolio*. Mendeley Data
 -   Wilkins, D. (2023). `treemapify`: Draw treemaps in `ggplot2`. <https://wilkox.org/treemapify/>
 -   Pedersen, T. L. (2024). `patchwork`: The composer of plots. <https://patchwork.data-imaginist.com/>
 
-## **8.3 Methodology References**
+## **9.3 Methodology References**
 
 -   Kam, T. S. (2024). *R for Visual Analytics — Course materials for ISSS608*. Singapore Management University.
 -   Werner, G. & Modlin, C. (2016). *Basic Ratemaking* (5th ed.). Casualty Actuarial Society.
