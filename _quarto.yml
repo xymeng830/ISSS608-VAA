@@ -20,7 +20,7 @@ website:
           - text: "Hands-on Exercise 5"
             href: "Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html"
           - text: "Hands-on Exercise 7"
-            href: "Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex07.html"  
+            href: "Hands-on_Ex/Hands-on_Ex07/Hands-on_Ex07.html"  
       - text: "Take-home Exercises"
         menu:
           - text: "Take-home Ex 01"
