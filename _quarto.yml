@@ -25,6 +25,8 @@ website:
         menu:
           - text: "Take-home Ex 01"
             href: "Take-home_Ex/Take-home_Ex01/Take-home_Ex01.qmd"
+          - text: "Take-home Ex 02"
+            href: "Take-home_Ex/Take-home_Ex02/Take-home_Ex02.qmd"
     right:
       - href: index.qmd
         text: Home
