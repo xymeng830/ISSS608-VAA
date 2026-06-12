@@ -1,0 +1,243 @@
+---
+title: "Hands-on Exercise 8"
+author: "Meng Xinyu"
+---
+
+# **17  Visualising and Analysing Time-oriented Data**
+
+```{r}
+pacman::p_load(scales, viridis, lubridate, ggthemes,
+               gridExtra, readxl, knitr, data.table,
+               ggHoriPlot, tidyverse)
+```
+
+```{r}
+attacks <- read_csv("data/eventlog.csv")
+air     <- read_excel("data/arrivals_by_air.xlsx")
+rice    <- read_csv("data/rice.csv")
+```
+
+### **17.4.3 Examining the data structure**
+
+```{r}
+kable(head(attacks))
+```
+
+### **17.4.4 Data Preparation**
+
+```{r}
+#Step1
+make_hr_wkday <- function(ts, sc, tz) {
+  real_times <- ymd_hms(ts, 
+                        tz = tz[1], 
+                        quiet = TRUE)
+  dt <- data.table(source_country = sc,
+                   wkday = weekdays(real_times),
+                   hour = hour(real_times))
+  return(dt)
+}
+#Step2
+wkday_levels <- c('Saturday', 'Friday', 
+                  'Thursday', 'Wednesday', 
+                  'Tuesday', 'Monday', 
+                  'Sunday')
+
+attacks <- attacks %>%
+  group_by(tz) %>%
+  do(make_hr_wkday(.$timestamp, 
+                   .$source_country, 
+                   .$tz)) %>% 
+  ungroup() %>% 
+  mutate(wkday = factor(
+    wkday, levels = wkday_levels),
+    hour  = factor(
+      hour, levels = 0:23))
+kable(head(attacks))
+```
+
+### **17.4.5 Building the Calendar Heatmaps**
+
+```{r, warning=FALSE}
+grouped <- attacks %>% 
+  count(wkday, hour) %>% 
+  ungroup() %>%
+  na.omit()
+
+ggplot(grouped, 
+       aes(hour, 
+           wkday, 
+           fill = n)) + 
+geom_tile(color = "white", 
+          size = 0.1) + 
+theme_tufte(base_family = "Helvetica") + 
+coord_equal() +
+scale_fill_gradient(name = "# of attacks",
+                    low = "sky blue", 
+                    high = "dark blue") +
+labs(x = NULL, 
+     y = NULL, 
+     title = "Attacks by weekday and time of day") +
+theme(axis.ticks = element_blank(),
+      plot.title = element_text(hjust = 0.5),
+      legend.title = element_text(size = 8),
+      legend.text = element_text(size = 6) )
+```
+
+### **17.4.6 Building Multiple Calendar Heatmaps**
+
+```{r}
+attacks_by_country <- count(attacks, source_country) %>%
+  mutate(percent = percent(n / sum(n))) %>%
+  arrange(desc(n))
+```
+
+```{r}
+top4 <- attacks_by_country$source_country[1:4]
+
+top4_attacks <- attacks %>%
+  filter(source_country %in% top4) %>%
+  count(source_country, wkday, hour) %>%
+  ungroup() %>%
+  mutate(source_country = factor(source_country, levels = top4)) %>%
+  na.omit()
+```
+
+```{r}
+ggplot(top4_attacks,
+       aes(hour, wkday, fill = n)) +
+  geom_tile(color = "white",
+            linewidth = 0.1) +
+  theme_tufte(base_family = "Helvetica") +
+  coord_equal() +
+  scale_fill_gradient(name = "# of attacks",
+                      low = "sky blue",
+                      high = "dark blue") +
+  facet_wrap(~source_country, ncol = 2) +
+  labs(x = NULL, y = NULL,
+       title = "Attacks on top 4 countries by weekday and time of day") +
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_text(size = 7),
+        plot.title = element_text(hjust = 0.5),
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 6))
+```
+
+### **17.4.7 Plotting Multiple Calendar Heatmaps**
+
+```{r}
+#Step 1: Deriving attack by country object
+attacks_by_country <- count(
+  attacks, source_country) %>%
+  mutate(percent = percent(n/sum(n))) %>%
+  arrange(desc(n))
+```
+
+```{r}
+#Step 2: Preparing the tidy data frame
+top4 <- attacks_by_country$source_country[1:4]
+top4_attacks <- attacks %>%
+  filter(source_country %in% top4) %>%
+  count(source_country, wkday, hour) %>%
+  ungroup() %>%
+  mutate(source_country = factor(
+    source_country, levels = top4)) %>%
+  na.omit()
+```
+
+### **17.4.8 Plotting Multiple Calendar Heatmaps**
+
+```{r}
+#Step 3: Plotting the Multiple Calender Heatmap by using ggplot2 package
+ggplot(top4_attacks, 
+       aes(hour, 
+           wkday, 
+           fill = n)) + 
+  geom_tile(color = "white", 
+          size = 0.1) + 
+  theme_tufte(base_family = "Helvetica") + 
+  coord_equal() +
+  scale_fill_gradient(name = "# of attacks",
+                    low = "sky blue", 
+                    high = "dark blue") +
+  facet_wrap(~source_country, ncol = 2) +
+  labs(x = NULL, y = NULL, 
+     title = "Attacks on top 4 countries by weekday and time of day") +
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_text(size = 7),
+        plot.title = element_text(hjust = 0.5),
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 6) )
+```
+
+## **17.5 Plotting Cycle Plot**
+
+### **17.5.2 Step 2: Deriving month and year fields**
+
+```{r}
+air$month <- factor(month(air$`Month-Year`), 
+                    levels=1:12, 
+                    labels=month.abb, 
+                    ordered=TRUE) 
+air$year <- year(ymd(air$`Month-Year`))
+```
+
+### **17.5.3 Step 3: Extracting the target country**
+
+```{r}
+Vietnam <- air %>% 
+  select(`Vietnam`, 
+         month, 
+         year) %>%
+  filter(year >= 2010)
+```
+
+### **17.5.4 Step 4: Computing year average arrivals by month**
+
+```{r}
+hline.data <- Vietnam %>% 
+  group_by(month) %>%
+  summarise(avgvalue = mean(`Vietnam`))
+```
+
+### **17.5.5 Step 5: Plotting the cycle plot**
+
+```{r}
+ggplot() + 
+  geom_line(data=Vietnam,
+            aes(x=year, 
+                y=`Vietnam`, 
+                group=month), 
+            colour="black") +
+  geom_hline(aes(yintercept=avgvalue), 
+             data=hline.data, 
+             linetype=6, 
+             colour="red", 
+             size=0.5) + 
+  facet_grid(~month) +
+  labs(axis.text.x = element_blank(),
+       title = "Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019") +
+  xlab("") +
+  ylab("No. of Visitors") +
+  theme_tufte(base_family = "Helvetica")
+```
+
+## **17.6 Plotting Slopegraph**
+
+### **17.6.2 Step 2: Plotting the slopegraph**
+
+```{r}
+library(tidyverse)
+
+rice %>%
+  mutate(Year = factor(Year)) %>%
+  filter(Year %in% c(1961, 1980)) %>%
+  ggplot(aes(x = Year, y = Yield, group = Country)) +
+  geom_line(aes(color = Country), linewidth = 0.8) +
+  geom_point(aes(color = Country), size = 2) +
+  geom_text(data = . %>% filter(Year == 1980),
+            aes(label = Country), hjust = -0.1, size = 3) +
+  labs(title = "Rice Yield of Top 11 Asian Countries",
+       subtitle = "1961–1980") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
